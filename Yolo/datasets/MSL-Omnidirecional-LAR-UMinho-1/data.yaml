@@ -1,0 +1,15 @@
+names:
+- ball
+- goal
+- person
+- robot
+nc: 4
+roboflow:
+  license: CC BY 4.0
+  project: msl-omnidirecional-lar-uminho
+  url: https://universe.roboflow.com/project/msl-omnidirecional-lar-uminho/dataset/1
+  version: 1
+  workspace: project
+test: ../test/images
+train: /home/martins/Desktop/Redes/datasets/MSL-Omnidirecional-LAR-UMinho-1/train/images
+val: /home/martins/Desktop/Redes/datasets/MSL-Omnidirecional-LAR-UMinho-1/valid/images
