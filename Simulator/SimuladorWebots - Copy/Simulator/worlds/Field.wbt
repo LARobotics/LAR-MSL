@@ -1,0 +1,90 @@
+#VRML_SIM R2022b utf8
+
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2022b/projects/objects/backgrounds/protos/TexturedBackground.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2022b/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2022b/projects/objects/floors/protos/RectangleArena.proto"
+
+WorldInfo {
+}
+Viewpoint {
+  orientation -0.15010063650428634 0.10947267920597682 0.98259123313231 1.97837218681654
+  position 0.5452377480405569 -0.6641645838511201 0.28138010272830444
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+RectangleArena {
+  floorSize 24 16
+  floorTileSize 24 16
+  floorAppearance Appearance {
+    texture ImageTexture {
+      url [
+        "C:\\Users\\nandi\\Documents\\UMinho\\5ano\\MSL\\SimuladorWebots\\Campo.png"
+      ]
+      repeatS FALSE
+      repeatT FALSE
+    }
+  }
+}
+Robot {
+  translation 0 0 0.05
+  rotation 1 0 0 0
+  children [
+    Transform {
+      children [
+        HingeJoint {
+          jointParameters HingeJointParameters {
+            axis 0 -1 0
+            anchor 0.25 0 0
+          }
+          device [
+            RotationalMotor {
+              name "motor_1"
+              sound ""
+            }
+          ]
+          endPoint Solid {
+            translation 0.25 0 0
+            rotation 0 -1 0 1.57
+            children [
+              DEF Wheel Shape {
+                appearance PBRAppearance {
+                  baseColor 1 0 1
+                  roughness 1
+                  metalness 0
+                }
+                geometry Cylinder {
+                  height 0.025
+                  radius 0.05
+                }
+              }
+            ]
+            boundingObject USE Wheel
+            physics Physics {
+            }
+          }
+        }
+      ]
+    }
+    DEF RobotBody Shape {
+      appearance PBRAppearance {
+        baseColor 0.1 0.25 0.25
+        roughness 1
+        metalness 0
+      }
+      geometry Mesh {
+        url [
+          "../../RobotV2.obj"
+        ]
+      }
+    }
+  ]
+  boundingObject USE RobotBody
+  physics Physics {
+  }
+  controller "RobotController_v1"
+  controllerArgs [
+    ""
+  ]
+}

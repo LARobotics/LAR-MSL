@@ -1,0 +1,62 @@
+syntax = "proto3";
+package pb;
+
+option go_package = "github.com/ardanlabs/python-go/grpc/pb";
+
+message Object_Kinect{
+   uint32 id = 1;
+   uint32 x = 2;
+   uint32 y = 3;
+   uint32 dist = 4;
+   uint32 conf = 5;
+}
+
+message Object_Omni{
+   uint32 id = 1;
+   uint32 x = 2;
+   uint32 y = 3;
+   uint32 dist = 4;
+   uint32 conf = 6;
+}
+
+message Request_Omni_Calib {
+     bool check = 1;
+     bytes image = 2;
+}
+
+message Request {
+   bool check = 1;
+}
+
+message Request_BS {
+   uint32 check = 1;
+}
+message Response_Omni {
+   bytes omni = 1;
+   uint32 img_to_send = 2;
+   repeated Object_Omni objects = 3; // 3 bytes 'classe' 'x' 'y'
+   
+}
+
+message Response_Kinect {
+   bytes kinect = 1;
+   bytes kinect_depth = 2;
+   repeated Object_Kinect objects = 3; // 4 bytes 'classe' 'x' 'y' 'dist'
+}
+
+message Response_to_BS {
+   bytes image = 1;
+   uint32 count = 2;
+}
+
+service Yolo_Omni {
+   rpc Send_Omni(Request_Omni_Calib) returns (Response_Omni) {}
+}
+
+service Yolo_Kinect {
+   rpc Send_Kinect(Request) returns (Response_Kinect) {}
+}
+
+service Base_Satation {
+   rpc Send_to_BS(Request_BS) returns (Response_to_BS) {}
+}

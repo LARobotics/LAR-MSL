@@ -1,0 +1,30 @@
+Circle Field:
+  'on': false
+  slider: 1
+Ideal Goal Distance:
+  'on': false
+  slider: 0.55
+Ideal Pass Distance:
+  'on': false
+  slider: 1
+Main 5:
+  'on': true
+  slider: 1
+Middle Field:
+  'on': true
+  slider: 0.3
+Other Middle Field:
+  'on': true
+  slider: 0.3
+PC Opponents:
+  'on': true
+  slider: 1
+PC Teammates:
+  'on': false
+  slider: 1
+Radius With Ball:
+  'on': false
+  slider: 1
+Zone:
+  'on': true
+  slider: 0.5

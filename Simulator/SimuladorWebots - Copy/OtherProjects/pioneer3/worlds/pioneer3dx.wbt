@@ -1,0 +1,140 @@
+#VRML_SIM R2022b utf8
+
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2022b/projects/objects/backgrounds/protos/TexturedBackground.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2022b/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2022b/projects/objects/floors/protos/RectangleArena.proto"
+
+WorldInfo {
+  info [
+    "Pioneer 3DX (Adept Mobile Robots)"
+    "This two-wheel, two-motor differential drive robot has in addition a rear caster wheel"
+    "It is programmed to perform a simple obstacle avoidance behavior based on the values sensed by its 16 sonars"
+  ]
+  title "Pioneer 3-DX with blinking LEDs moving according to a Braitenberg rule"
+  basicTimeStep 8
+}
+Viewpoint {
+  fieldOfView 0.660595
+  orientation -0.1453799089033771 -0.05155486845067048 0.988031769543004 3.489235303866819
+  position 3.2941856309353525 1.183554191194119 1.041314298603851
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+RectangleArena {
+  floorSize 6 6
+  floorTileSize 2 2
+  wallThickness 0.1
+  wallHeight 0.4
+  wallAppearance PBRAppearance {
+    baseColorMap ImageTexture {
+      url [
+        "https://raw.githubusercontent.com/cyberbotics/webots/R2022b/projects/default/worlds/textures/red_brick_wall.jpg"
+      ]
+    }
+    roughness 1
+    metalness 0
+    textureTransform TextureTransform {
+      scale 11 13
+    }
+  }
+}
+Robot {
+  translation -3.445064381168608e-11 -1.5901101124606157e-10 -0.003314970564126579
+  rotation -0.9777836955765672 0.2096164226978189 1.2478639871648551e-08 6.524858572343868e-08
+  scale 0.25 0.25 0.25
+  children [
+    DEF Body Transform {
+      translation 0 0 0.415
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0 0 1
+            roughness 1
+            metalness 0
+          }
+          geometry Cylinder {
+            height 0.8
+            radius 0.45
+          }
+        }
+      ]
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -4.863665026277886e-11
+        anchor 0 0.5 0.05
+      }
+      device [
+        RotationalMotor {
+          name "motor1"
+        }
+      ]
+      endPoint Solid {
+        translation 0 0.5000000000029182 0.11
+        rotation 0.5773489358463119 0.5773509358460877 -0.5773509358741685 2.0943999999719165
+        scale 2 2 2
+        children [
+          DEF wheel Shape {
+            appearance PBRAppearance {
+              baseColor 1 0 0
+              roughness 1
+              metalness 0
+            }
+            geometry Cylinder {
+              height 0.1
+              radius 0.05
+            }
+          }
+        ]
+        boundingObject USE wheel
+        physics DEF wheel_physics Physics {
+        }
+        linearVelocity 2.226690590392466e-09 -2.305272663707775e-16 -6.20351189230182e-16
+        angularVelocity 5.78858233068809e-15 8.911458412877086e-08 -1.7967771432612998e-17
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -4.863753844119856e-11
+        anchor 0 -0.5 0.05
+      }
+      device [
+        RotationalMotor {
+          name "motor2"
+        }
+      ]
+      endPoint Solid {
+        translation 0 -0.4999999999970817 0.11
+        rotation 0.5773489358463116 0.5773509358460873 -0.5773509358741689 2.094399999971916
+        scale 2 2 2
+        children [
+          DEF wheel2 Shape {
+            appearance PBRAppearance {
+              baseColor 1 0 0
+              roughness 1
+              metalness 0
+            }
+            geometry Cylinder {
+              height 0.1
+              radius 0.05
+            }
+          }
+        ]
+        name "solid(1)"
+        boundingObject USE wheel2
+        physics DEF wheel_physics2 Physics {
+        }
+        linearVelocity 2.2266919967343746e-09 4.2111424185726436e-16 -1.6185520017545875e-15
+        angularVelocity -3.918748930567237e-14 8.911458415842874e-08 5.5261245431019856e-15
+      }
+    }
+  ]
+  boundingObject USE Body
+  physics Physics {
+  }
+  controller "Robozinho"
+  linearVelocity 9.021178090770654e-09 -5.926481042320534e-16 -1.0495877211233066e-15
+  angularVelocity 7.116661918951895e-15 8.91146056020464e-08 2.3467694073223613e-15
+}

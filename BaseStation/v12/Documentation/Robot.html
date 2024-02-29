@@ -1,0 +1,1123 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>Robot API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>Robot</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import socket
+import pygame
+from consts import *
+import numpy as np
+import strategy
+
+
+class Robot:
+    def __init__(self, robotID, myIP, robotIP, Aport, Bport):
+        &#34;&#34;&#34;_Class Robot Initializer_
+
+        Args:
+            robotID (_type_): _description_
+            myIP (_type_): _description_
+            robotIP (_type_): _description_
+            Aport (_type_): _description_
+            Bport (_type_): _description_
+        &#34;&#34;&#34;
+        self.robotID = robotID
+        self.myIP = myIP
+        self.robotIP = robotIP
+
+        self.rfrMASocket = (
+            self.myIP,
+            20000 + Bport * 1000 + Aport * 100 + self.robotID * 10 + 0,
+        )
+        self.rfrRASocket = (
+            self.robotIP,
+            20000 + Bport * 1000 + Aport * 100 + self.robotID * 10 + 1,
+        )
+        self.s2rMASocket = (
+            self.myIP,
+            20000 + Aport * 1000 + Bport * 100 + self.robotID * 10 + 1,
+        )
+        self.s2rRASocket = (
+            self.robotIP,
+            20000 + Aport * 1000 + Bport * 100 + self.robotID * 10 + 0,
+        )
+
+        self.s2rSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
+        self.s2rSocket.bind(self.s2rMASocket)
+        self.s2rSocket.setblocking(0)
+        self.rfrSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
+        self.rfrSocket.bind(self.rfrMASocket)
+        self.rfrSocket.setblocking(0)
+
+        self.position = [-100, -100, -100]
+        self.orientation = 0
+        self.ball_position = [0, 0, 0]
+        self.ball_handler = 0
+        self.dist2Ball = 0
+
+        self.skill = &#34;&#34;
+        self.packet = [-1, -1, -1, -1, -1, -1, -1, -1]
+        self.info = &#34;&#34;
+
+        self.otherRobots = []
+        self.otherRobotsPoints = []
+
+    def __str__(self):
+        return (&#34;Robot&#34;+ str(self.robotID) + str(self.rfrRASocket) + &#34; ----&gt; &#34; + str(self.rfrMASocket) + &#34; BS&#34; + &#34;\nRobot&#34; + str(self.robotID) + str(self.s2rRASocket)  + &#34; &lt;---- &#34; + str(self.s2rMASocket) + &#34; BS&#34; + &#34;\n&#34; )
+
+    def checkPosition(self, x, y):
+        if abs(self.position[0] - x) &lt; 0.1 and abs(self.position[1] - y) &lt; 0.1:
+            return True
+        else:
+            return False
+
+    def draw_robot(self, screen):
+        x = self.position[0] * 10 * FACTOR + FIELD_SIZE[&#34;wall&#34;][0] / 2
+        y = -self.position[1] * 10 * FACTOR + FIELD_SIZE[&#34;wall&#34;][1] / 2 + YOFFSET
+        ang = self.orientation
+
+        points = []
+        points.append(
+            (
+                x + ROBOT_SIZE / 2 * np.cos(np.radians(30 - ang)),
+                y + ROBOT_SIZE / 2 * np.sin(np.radians(30 - ang)),
+            )
+        )
+        NumberOfPoints = 6
+        angOffset = 360 / NumberOfPoints / 2
+        for i in range(NumberOfPoints):
+            angInc = i * 360 / NumberOfPoints
+            points.append(
+                (
+                    x + ROBOT_SIZE * np.cos(np.radians(angInc + angOffset - ang)),
+                    y + ROBOT_SIZE * np.sin(np.radians(angInc + angOffset - ang)),
+                )
+            )
+        points.append(
+            (
+                x + ROBOT_SIZE / 2 * np.cos(np.radians(-30 - ang)),
+                y + ROBOT_SIZE / 2 * np.sin(np.radians(-30 - ang)),
+            )
+        )
+
+        pygame.draw.polygon(screen, COLORS[&#34;blue&#34;], points)
+        pygame.draw.circle(
+            screen,
+            COLORS[&#34;yellow&#34;],
+            (
+                self.ball_position[0] * 10 * FACTOR + FIELD_SIZE[&#34;wall&#34;][0] / 2,
+                -self.ball_position[1] * 10 * FACTOR
+                + FIELD_SIZE[&#34;wall&#34;][1] / 2
+                + YOFFSET,
+            ),
+            FACTOR,
+        )
+
+        text = SMALLFONT.render(str(self.robotID), True, (255, 255, 255))
+
+        screen.blit(text, (x - text.get_width() / 2, y - text.get_height() / 2))
+
+    def draw_opponents(self, screen):
+        for opponent in self.otherRobots:
+            pygame.draw.circle(
+                screen,
+                COLORS[&#34;red&#34;],
+                coord2FieldCoord(opponent[0], opponent[1]),
+                ROBOT_SIZE,
+            )
+
+    def draw_robotInfo(self, screen):
+        robotID = self.robotID - 1
+        pygame.draw.rect(
+            screen,
+            COLORS[&#34;button&#34;],
+            (
+                robotID * int(RESOLUTION[0] / NUMBER_OF_ROBOTS),
+                160 * FACTOR + MENUS_SIZE * RESOLUTION[1],
+                int(RESOLUTION[0] / NUMBER_OF_ROBOTS) - FACTOR,
+                RESOLUTION[1] - MENUS_SIZE * RESOLUTION[1] - 160 * FACTOR,
+            ),
+            border_radius=5,
+        )
+        text = SMALLFONT.render(&#34;Robot_&#34; + str(self.robotID), True, (255, 255, 255))
+        screen.blit(
+            text,
+            (
+                robotID * int(RESOLUTION[0] / NUMBER_OF_ROBOTS) + 2 * FACTOR,
+                160 * FACTOR + MENUS_SIZE * RESOLUTION[1] + 2 * FACTOR,
+            ),
+        )
+        text = SMALLFONT.render(
+            &#34;Skill: &#34; + str(SKILLSGUI[self.packet[0]]), True, (255, 255, 255)
+        )
+        screen.blit(
+            text,
+            (
+                robotID * int(RESOLUTION[0] / NUMBER_OF_ROBOTS) + 2 * FACTOR,
+                160 * FACTOR + MENUS_SIZE * RESOLUTION[1] + 2 * FACTOR + 7 * FACTOR,
+            ),
+        )
+        text = SMALLFONT.render(&#34;Args: &#34; + str(self.packet[1:]), True, (255, 255, 255))
+        screen.blit(
+            text,
+            (
+                robotID * int(RESOLUTION[0] / NUMBER_OF_ROBOTS) + 2 * FACTOR,
+                160 * FACTOR + MENUS_SIZE * RESOLUTION[1] + 2 * FACTOR + 14 * FACTOR,
+            ),
+        )
+        text = SMALLFONT.render(
+            &#34;BallHandler: &#34; + str(strategy.BallHandler), True, (255, 255, 255)
+        )
+        screen.blit(
+            text,
+            (
+                robotID * int(RESOLUTION[0] / NUMBER_OF_ROBOTS)
+                + 30 * FACTOR
+                + 2 * FACTOR,
+                160 * FACTOR + MENUS_SIZE * RESOLUTION[1] + 2 * FACTOR + 21 * FACTOR,
+            ),
+        )
+        text = SMALLFONT.render(
+            &#34;CanShoot: &#34; + str(strategy.CanShoot), True, (255, 255, 255)
+        )
+        screen.blit(
+            text,
+            (
+                robotID * int(RESOLUTION[0] / NUMBER_OF_ROBOTS) + 2 * FACTOR,
+                160 * FACTOR + MENUS_SIZE * RESOLUTION[1] + 2 * FACTOR + 21 * FACTOR,
+            ),
+        )
+        text = SMALLFONT.render(
+            &#34;CanGoal: &#34; + str(strategy.CanGoal), True, (255, 255, 255)
+        )
+        screen.blit(
+            text,
+            (
+                robotID * int(RESOLUTION[0] / NUMBER_OF_ROBOTS)
+                + 30 * FACTOR
+                + 2 * FACTOR,
+                160 * FACTOR + MENUS_SIZE * RESOLUTION[1] + 2 * FACTOR + 28 * FACTOR,
+            ),
+        )
+        text = SMALLFONT.render(
+            &#34;CanPass: &#34; + str(strategy.CanPass), True, (255, 255, 255)
+        )
+        screen.blit(
+            text,
+            (
+                robotID * int(RESOLUTION[0] / NUMBER_OF_ROBOTS) + 2 * FACTOR,
+                160 * FACTOR + MENUS_SIZE * RESOLUTION[1] + 2 * FACTOR + 28 * FACTOR,
+            ),
+        )
+        text = TINYFONT.render(str(strategy.args[1:]), True, (255, 255, 255))
+        screen.blit(
+            text,
+            (
+                robotID * int(RESOLUTION[0] / NUMBER_OF_ROBOTS) + 2 * FACTOR,
+                160 * FACTOR + MENUS_SIZE * RESOLUTION[1] + 2 * FACTOR + 35 * FACTOR,
+            ),
+        )
+        text = TINYFONT.render(str(self.skill), True, (255, 255, 255))
+        screen.blit(
+            text,
+            (
+                robotID * int(RESOLUTION[0] / NUMBER_OF_ROBOTS) + 2 * FACTOR,
+                160 * FACTOR + MENUS_SIZE * RESOLUTION[1] + 2 * FACTOR + 42 * FACTOR,
+            ),
+        )
+
+    def draw_lines_of_pass(self, screen, Robots):
+        points = []
+        allpoints = []
+        if self.ball_handler == 1:
+            print(self.otherRobots)
+            for robot in Robots:
+                if robot.ball_handler != 1:
+                    myLocation = [self.position[0], self.position[1]]
+                    buddyLocation = [robot.position[0], robot.position[1]]
+                    ang2Robots = np.round(
+                        np.arctan2(
+                            myLocation[1] - buddyLocation[1],
+                            myLocation[0] - buddyLocation[0],
+                        ),
+                        2,
+                    )
+                    angOponent = ang2Robots + 3.14 / 2
+                    x = MARGIN2PASS * np.cos(angOponent)
+                    y = MARGIN2PASS * np.sin(angOponent)
+                    points = [
+                        coord2FieldCoord(myLocation[0] - x, myLocation[1] - y),
+                        coord2FieldCoord(myLocation[0] + x, myLocation[1] + y),
+                        coord2FieldCoord(buddyLocation[0] + x, buddyLocation[1] + y),
+                        coord2FieldCoord(buddyLocation[0] - x, buddyLocation[1] - y),
+                        coord2FieldCoord(myLocation[0] - x, myLocation[1] - y),
+                    ]
+                    allpoints.append(points)
+                    pygame.draw.polygon(screen, COLORS[&#34;yellow&#34;], points, width=1)
+                    pygame.draw.line(
+                        screen,
+                        COLORS[&#34;yellow&#34;],
+                        coord2FieldCoord(myLocation[0], myLocation[1]),
+                        coord2FieldCoord(buddyLocation[0], buddyLocation[1]),
+                        width=1,
+                    )
+                    for opponent in self.otherRobots:
+                        if len(self.otherRobots) &gt; 0:
+                            if insidePolygon(
+                                myLocation,
+                                buddyLocation,
+                                ang2Robots,
+                                angOponent,
+                                opponent,
+                                MARGIN2PASS,
+                                screen,
+                            ):
+                                pygame.draw.polygon(
+                                    screen, COLORS[&#34;red&#34;], points, width=2
+                                )
+
+
+def getInfo(Robots):
+    a = 0
+    for robot in Robots:
+        try:
+            message = robot.rfrSocket.recvfrom(1024)
+            # print(message[1], end=&#34; - &#34;)
+            robot.info = (message[0].decode(&#34;utf8&#34;, &#34;strict&#34;).replace(&#34;]&#34;, &#34;&#34;).replace(&#34;[&#34;, &#34;&#34;).replace(&#34; &#34;, &#34;&#34;).split(&#34;;&#34;))
+            robot.position = [float(num) for num in robot.info[0].split(&#34;,&#34;)]
+            robot.orientation = int(robot.info[1])
+            robot.ball_position = [float(num) for num in robot.info[2].split(&#34;,&#34;)]
+            robot.ball_handler = int(robot.info[3])
+            robot.dist2Ball = round(np.sqrt(np.power((robot.position[0] - robot.ball_position[0]), 2)+ np.power((robot.position[1] - robot.ball_position[1]), 2)),2,)
+            if robot.info[4] != &#34;&#34;:
+                robot.otherRobots = [float(num) for num in robot.info[4].split(&#34;,&#34;)]
+                robot.otherRobots = [
+                    [float(robot.otherRobots[i]), float(robot.otherRobots[i + 1])]
+                    for i in range(0, len(robot.otherRobots), 2)
+                ]
+            else:
+                robot.otherRobots = []
+            a = 1
+        except:
+            pass
+    return a
+
+
+def sendInfo(Robots):
+    for robot in Robots:
+        robot.s2rSocket.sendto(str(robot.packet).encode(), robot.s2rRASocket)
+
+
+def dataFusion(Robots):
+    robotPositions = [[robot.position[0], robot.position[1]] for robot in Robots]
+    for robot in Robots:
+        for robotpos in robotPositions:
+            for oo in robot.otherRobots:
+                if abs(robotpos[0] - oo[0]) + abs(robotpos[1] - oo[1]) &lt; 0.25:
+                    robot.otherRobots.remove(oo)
+
+
+def coord2FieldCoord(X0, X1):
+    Y1 = X0 * 10 * FACTOR + FIELD_SIZE[&#34;wall&#34;][0] / 2
+    Y2 = -X1 * 10 * FACTOR + FIELD_SIZE[&#34;wall&#34;][1] / 2 + YOFFSET
+    return Y1, Y2
+
+
+def insidePolygon(a, b, ang2Robots, angOponent, point, margin, screen):
+    x = margin * np.cos(angOponent)
+    y = margin * np.sin(angOponent)
+    x, y = get_intersect(
+        (point[0] - x, point[1] - y), (point[0] + x, point[1] + y), a, b
+    )
+    if a[0] &lt;= x &lt;= b[0] or b[0] &lt;= x &lt;= a[0]:
+        if np.sqrt((x - point[0]) ** 2 + (y - point[1]) ** 2) &lt; 5 * margin:
+            pygame.draw.line(
+                screen,
+                COLORS[&#34;yellow&#34;],
+                coord2FieldCoord(point[0], point[1]),
+                coord2FieldCoord(x, y),
+                width=1,
+            )
+            pygame.draw.circle(
+                screen, COLORS[&#34;yellow&#34;], coord2FieldCoord(x, y), radius=3
+            )
+        if np.sqrt((x - point[0]) ** 2 + (y - point[1]) ** 2) &lt; margin:
+            return 1
+    return 0
+
+
+def get_intersect(a1, a2, b1, b2):
+    s = np.vstack([a1, a2, b1, b2])  # s for stacked
+    h = np.hstack((s, np.ones((4, 1))))  # h for homogeneous
+    l1 = np.cross(h[0], h[1])  # get first line
+    l2 = np.cross(h[2], h[3])  # get second line
+    x, y, z = np.cross(l1, l2)  # point of intersection
+    if z == 0:  # lines are parallel
+        return (float(&#34;inf&#34;), float(&#34;inf&#34;))
+    return (x / z, y / z)</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="Robot.coord2FieldCoord"><code class="name flex">
+<span>def <span class="ident">coord2FieldCoord</span></span>(<span>X0, X1)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def coord2FieldCoord(X0, X1):
+    Y1 = X0 * 10 * FACTOR + FIELD_SIZE[&#34;wall&#34;][0] / 2
+    Y2 = -X1 * 10 * FACTOR + FIELD_SIZE[&#34;wall&#34;][1] / 2 + YOFFSET
+    return Y1, Y2</code></pre>
+</details>
+</dd>
+<dt id="Robot.dataFusion"><code class="name flex">
+<span>def <span class="ident">dataFusion</span></span>(<span>Robots)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def dataFusion(Robots):
+    robotPositions = [[robot.position[0], robot.position[1]] for robot in Robots]
+    for robot in Robots:
+        for robotpos in robotPositions:
+            for oo in robot.otherRobots:
+                if abs(robotpos[0] - oo[0]) + abs(robotpos[1] - oo[1]) &lt; 0.25:
+                    robot.otherRobots.remove(oo)</code></pre>
+</details>
+</dd>
+<dt id="Robot.getInfo"><code class="name flex">
+<span>def <span class="ident">getInfo</span></span>(<span>Robots)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getInfo(Robots):
+    a = 0
+    for robot in Robots:
+        try:
+            message = robot.rfrSocket.recvfrom(1024)
+            # print(message[1], end=&#34; - &#34;)
+            robot.info = (message[0].decode(&#34;utf8&#34;, &#34;strict&#34;).replace(&#34;]&#34;, &#34;&#34;).replace(&#34;[&#34;, &#34;&#34;).replace(&#34; &#34;, &#34;&#34;).split(&#34;;&#34;))
+            robot.position = [float(num) for num in robot.info[0].split(&#34;,&#34;)]
+            robot.orientation = int(robot.info[1])
+            robot.ball_position = [float(num) for num in robot.info[2].split(&#34;,&#34;)]
+            robot.ball_handler = int(robot.info[3])
+            robot.dist2Ball = round(np.sqrt(np.power((robot.position[0] - robot.ball_position[0]), 2)+ np.power((robot.position[1] - robot.ball_position[1]), 2)),2,)
+            if robot.info[4] != &#34;&#34;:
+                robot.otherRobots = [float(num) for num in robot.info[4].split(&#34;,&#34;)]
+                robot.otherRobots = [
+                    [float(robot.otherRobots[i]), float(robot.otherRobots[i + 1])]
+                    for i in range(0, len(robot.otherRobots), 2)
+                ]
+            else:
+                robot.otherRobots = []
+            a = 1
+        except:
+            pass
+    return a</code></pre>
+</details>
+</dd>
+<dt id="Robot.get_intersect"><code class="name flex">
+<span>def <span class="ident">get_intersect</span></span>(<span>a1, a2, b1, b2)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_intersect(a1, a2, b1, b2):
+    s = np.vstack([a1, a2, b1, b2])  # s for stacked
+    h = np.hstack((s, np.ones((4, 1))))  # h for homogeneous
+    l1 = np.cross(h[0], h[1])  # get first line
+    l2 = np.cross(h[2], h[3])  # get second line
+    x, y, z = np.cross(l1, l2)  # point of intersection
+    if z == 0:  # lines are parallel
+        return (float(&#34;inf&#34;), float(&#34;inf&#34;))
+    return (x / z, y / z)</code></pre>
+</details>
+</dd>
+<dt id="Robot.insidePolygon"><code class="name flex">
+<span>def <span class="ident">insidePolygon</span></span>(<span>a, b, ang2Robots, angOponent, point, margin, screen)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def insidePolygon(a, b, ang2Robots, angOponent, point, margin, screen):
+    x = margin * np.cos(angOponent)
+    y = margin * np.sin(angOponent)
+    x, y = get_intersect(
+        (point[0] - x, point[1] - y), (point[0] + x, point[1] + y), a, b
+    )
+    if a[0] &lt;= x &lt;= b[0] or b[0] &lt;= x &lt;= a[0]:
+        if np.sqrt((x - point[0]) ** 2 + (y - point[1]) ** 2) &lt; 5 * margin:
+            pygame.draw.line(
+                screen,
+                COLORS[&#34;yellow&#34;],
+                coord2FieldCoord(point[0], point[1]),
+                coord2FieldCoord(x, y),
+                width=1,
+            )
+            pygame.draw.circle(
+                screen, COLORS[&#34;yellow&#34;], coord2FieldCoord(x, y), radius=3
+            )
+        if np.sqrt((x - point[0]) ** 2 + (y - point[1]) ** 2) &lt; margin:
+            return 1
+    return 0</code></pre>
+</details>
+</dd>
+<dt id="Robot.sendInfo"><code class="name flex">
+<span>def <span class="ident">sendInfo</span></span>(<span>Robots)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def sendInfo(Robots):
+    for robot in Robots:
+        robot.s2rSocket.sendto(str(robot.packet).encode(), robot.s2rRASocket)</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="Robot.Robot"><code class="flex name class">
+<span>class <span class="ident">Robot</span></span>
+<span>(</span><span>robotID, myIP, robotIP, Aport, Bport)</span>
+</code></dt>
+<dd>
+<div class="desc"><p><em>Class Robot Initializer</em></p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>robotID</code></strong> :&ensp;<code>_type_</code></dt>
+<dd><em>description</em></dd>
+<dt><strong><code>myIP</code></strong> :&ensp;<code>_type_</code></dt>
+<dd><em>description</em></dd>
+<dt><strong><code>robotIP</code></strong> :&ensp;<code>_type_</code></dt>
+<dd><em>description</em></dd>
+<dt><strong><code>Aport</code></strong> :&ensp;<code>_type_</code></dt>
+<dd><em>description</em></dd>
+<dt><strong><code>Bport</code></strong> :&ensp;<code>_type_</code></dt>
+<dd><em>description</em></dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Robot:
+    def __init__(self, robotID, myIP, robotIP, Aport, Bport):
+        &#34;&#34;&#34;_Class Robot Initializer_
+
+        Args:
+            robotID (_type_): _description_
+            myIP (_type_): _description_
+            robotIP (_type_): _description_
+            Aport (_type_): _description_
+            Bport (_type_): _description_
+        &#34;&#34;&#34;
+        self.robotID = robotID
+        self.myIP = myIP
+        self.robotIP = robotIP
+
+        self.rfrMASocket = (
+            self.myIP,
+            20000 + Bport * 1000 + Aport * 100 + self.robotID * 10 + 0,
+        )
+        self.rfrRASocket = (
+            self.robotIP,
+            20000 + Bport * 1000 + Aport * 100 + self.robotID * 10 + 1,
+        )
+        self.s2rMASocket = (
+            self.myIP,
+            20000 + Aport * 1000 + Bport * 100 + self.robotID * 10 + 1,
+        )
+        self.s2rRASocket = (
+            self.robotIP,
+            20000 + Aport * 1000 + Bport * 100 + self.robotID * 10 + 0,
+        )
+
+        self.s2rSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
+        self.s2rSocket.bind(self.s2rMASocket)
+        self.s2rSocket.setblocking(0)
+        self.rfrSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
+        self.rfrSocket.bind(self.rfrMASocket)
+        self.rfrSocket.setblocking(0)
+
+        self.position = [-100, -100, -100]
+        self.orientation = 0
+        self.ball_position = [0, 0, 0]
+        self.ball_handler = 0
+        self.dist2Ball = 0
+
+        self.skill = &#34;&#34;
+        self.packet = [-1, -1, -1, -1, -1, -1, -1, -1]
+        self.info = &#34;&#34;
+
+        self.otherRobots = []
+        self.otherRobotsPoints = []
+
+    def __str__(self):
+        return (&#34;Robot&#34;+ str(self.robotID) + str(self.rfrRASocket) + &#34; ----&gt; &#34; + str(self.rfrMASocket) + &#34; BS&#34; + &#34;\nRobot&#34; + str(self.robotID) + str(self.s2rRASocket)  + &#34; &lt;---- &#34; + str(self.s2rMASocket) + &#34; BS&#34; + &#34;\n&#34; )
+
+    def checkPosition(self, x, y):
+        if abs(self.position[0] - x) &lt; 0.1 and abs(self.position[1] - y) &lt; 0.1:
+            return True
+        else:
+            return False
+
+    def draw_robot(self, screen):
+        x = self.position[0] * 10 * FACTOR + FIELD_SIZE[&#34;wall&#34;][0] / 2
+        y = -self.position[1] * 10 * FACTOR + FIELD_SIZE[&#34;wall&#34;][1] / 2 + YOFFSET
+        ang = self.orientation
+
+        points = []
+        points.append(
+            (
+                x + ROBOT_SIZE / 2 * np.cos(np.radians(30 - ang)),
+                y + ROBOT_SIZE / 2 * np.sin(np.radians(30 - ang)),
+            )
+        )
+        NumberOfPoints = 6
+        angOffset = 360 / NumberOfPoints / 2
+        for i in range(NumberOfPoints):
+            angInc = i * 360 / NumberOfPoints
+            points.append(
+                (
+                    x + ROBOT_SIZE * np.cos(np.radians(angInc + angOffset - ang)),
+                    y + ROBOT_SIZE * np.sin(np.radians(angInc + angOffset - ang)),
+                )
+            )
+        points.append(
+            (
+                x + ROBOT_SIZE / 2 * np.cos(np.radians(-30 - ang)),
+                y + ROBOT_SIZE / 2 * np.sin(np.radians(-30 - ang)),
+            )
+        )
+
+        pygame.draw.polygon(screen, COLORS[&#34;blue&#34;], points)
+        pygame.draw.circle(
+            screen,
+            COLORS[&#34;yellow&#34;],
+            (
+                self.ball_position[0] * 10 * FACTOR + FIELD_SIZE[&#34;wall&#34;][0] / 2,
+                -self.ball_position[1] * 10 * FACTOR
+                + FIELD_SIZE[&#34;wall&#34;][1] / 2
+                + YOFFSET,
+            ),
+            FACTOR,
+        )
+
+        text = SMALLFONT.render(str(self.robotID), True, (255, 255, 255))
+
+        screen.blit(text, (x - text.get_width() / 2, y - text.get_height() / 2))
+
+    def draw_opponents(self, screen):
+        for opponent in self.otherRobots:
+            pygame.draw.circle(
+                screen,
+                COLORS[&#34;red&#34;],
+                coord2FieldCoord(opponent[0], opponent[1]),
+                ROBOT_SIZE,
+            )
+
+    def draw_robotInfo(self, screen):
+        robotID = self.robotID - 1
+        pygame.draw.rect(
+            screen,
+            COLORS[&#34;button&#34;],
+            (
+                robotID * int(RESOLUTION[0] / NUMBER_OF_ROBOTS),
+                160 * FACTOR + MENUS_SIZE * RESOLUTION[1],
+                int(RESOLUTION[0] / NUMBER_OF_ROBOTS) - FACTOR,
+                RESOLUTION[1] - MENUS_SIZE * RESOLUTION[1] - 160 * FACTOR,
+            ),
+            border_radius=5,
+        )
+        text = SMALLFONT.render(&#34;Robot_&#34; + str(self.robotID), True, (255, 255, 255))
+        screen.blit(
+            text,
+            (
+                robotID * int(RESOLUTION[0] / NUMBER_OF_ROBOTS) + 2 * FACTOR,
+                160 * FACTOR + MENUS_SIZE * RESOLUTION[1] + 2 * FACTOR,
+            ),
+        )
+        text = SMALLFONT.render(
+            &#34;Skill: &#34; + str(SKILLSGUI[self.packet[0]]), True, (255, 255, 255)
+        )
+        screen.blit(
+            text,
+            (
+                robotID * int(RESOLUTION[0] / NUMBER_OF_ROBOTS) + 2 * FACTOR,
+                160 * FACTOR + MENUS_SIZE * RESOLUTION[1] + 2 * FACTOR + 7 * FACTOR,
+            ),
+        )
+        text = SMALLFONT.render(&#34;Args: &#34; + str(self.packet[1:]), True, (255, 255, 255))
+        screen.blit(
+            text,
+            (
+                robotID * int(RESOLUTION[0] / NUMBER_OF_ROBOTS) + 2 * FACTOR,
+                160 * FACTOR + MENUS_SIZE * RESOLUTION[1] + 2 * FACTOR + 14 * FACTOR,
+            ),
+        )
+        text = SMALLFONT.render(
+            &#34;BallHandler: &#34; + str(strategy.BallHandler), True, (255, 255, 255)
+        )
+        screen.blit(
+            text,
+            (
+                robotID * int(RESOLUTION[0] / NUMBER_OF_ROBOTS)
+                + 30 * FACTOR
+                + 2 * FACTOR,
+                160 * FACTOR + MENUS_SIZE * RESOLUTION[1] + 2 * FACTOR + 21 * FACTOR,
+            ),
+        )
+        text = SMALLFONT.render(
+            &#34;CanShoot: &#34; + str(strategy.CanShoot), True, (255, 255, 255)
+        )
+        screen.blit(
+            text,
+            (
+                robotID * int(RESOLUTION[0] / NUMBER_OF_ROBOTS) + 2 * FACTOR,
+                160 * FACTOR + MENUS_SIZE * RESOLUTION[1] + 2 * FACTOR + 21 * FACTOR,
+            ),
+        )
+        text = SMALLFONT.render(
+            &#34;CanGoal: &#34; + str(strategy.CanGoal), True, (255, 255, 255)
+        )
+        screen.blit(
+            text,
+            (
+                robotID * int(RESOLUTION[0] / NUMBER_OF_ROBOTS)
+                + 30 * FACTOR
+                + 2 * FACTOR,
+                160 * FACTOR + MENUS_SIZE * RESOLUTION[1] + 2 * FACTOR + 28 * FACTOR,
+            ),
+        )
+        text = SMALLFONT.render(
+            &#34;CanPass: &#34; + str(strategy.CanPass), True, (255, 255, 255)
+        )
+        screen.blit(
+            text,
+            (
+                robotID * int(RESOLUTION[0] / NUMBER_OF_ROBOTS) + 2 * FACTOR,
+                160 * FACTOR + MENUS_SIZE * RESOLUTION[1] + 2 * FACTOR + 28 * FACTOR,
+            ),
+        )
+        text = TINYFONT.render(str(strategy.args[1:]), True, (255, 255, 255))
+        screen.blit(
+            text,
+            (
+                robotID * int(RESOLUTION[0] / NUMBER_OF_ROBOTS) + 2 * FACTOR,
+                160 * FACTOR + MENUS_SIZE * RESOLUTION[1] + 2 * FACTOR + 35 * FACTOR,
+            ),
+        )
+        text = TINYFONT.render(str(self.skill), True, (255, 255, 255))
+        screen.blit(
+            text,
+            (
+                robotID * int(RESOLUTION[0] / NUMBER_OF_ROBOTS) + 2 * FACTOR,
+                160 * FACTOR + MENUS_SIZE * RESOLUTION[1] + 2 * FACTOR + 42 * FACTOR,
+            ),
+        )
+
+    def draw_lines_of_pass(self, screen, Robots):
+        points = []
+        allpoints = []
+        if self.ball_handler == 1:
+            print(self.otherRobots)
+            for robot in Robots:
+                if robot.ball_handler != 1:
+                    myLocation = [self.position[0], self.position[1]]
+                    buddyLocation = [robot.position[0], robot.position[1]]
+                    ang2Robots = np.round(
+                        np.arctan2(
+                            myLocation[1] - buddyLocation[1],
+                            myLocation[0] - buddyLocation[0],
+                        ),
+                        2,
+                    )
+                    angOponent = ang2Robots + 3.14 / 2
+                    x = MARGIN2PASS * np.cos(angOponent)
+                    y = MARGIN2PASS * np.sin(angOponent)
+                    points = [
+                        coord2FieldCoord(myLocation[0] - x, myLocation[1] - y),
+                        coord2FieldCoord(myLocation[0] + x, myLocation[1] + y),
+                        coord2FieldCoord(buddyLocation[0] + x, buddyLocation[1] + y),
+                        coord2FieldCoord(buddyLocation[0] - x, buddyLocation[1] - y),
+                        coord2FieldCoord(myLocation[0] - x, myLocation[1] - y),
+                    ]
+                    allpoints.append(points)
+                    pygame.draw.polygon(screen, COLORS[&#34;yellow&#34;], points, width=1)
+                    pygame.draw.line(
+                        screen,
+                        COLORS[&#34;yellow&#34;],
+                        coord2FieldCoord(myLocation[0], myLocation[1]),
+                        coord2FieldCoord(buddyLocation[0], buddyLocation[1]),
+                        width=1,
+                    )
+                    for opponent in self.otherRobots:
+                        if len(self.otherRobots) &gt; 0:
+                            if insidePolygon(
+                                myLocation,
+                                buddyLocation,
+                                ang2Robots,
+                                angOponent,
+                                opponent,
+                                MARGIN2PASS,
+                                screen,
+                            ):
+                                pygame.draw.polygon(
+                                    screen, COLORS[&#34;red&#34;], points, width=2
+                                )</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="Robot.Robot.checkPosition"><code class="name flex">
+<span>def <span class="ident">checkPosition</span></span>(<span>self, x, y)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def checkPosition(self, x, y):
+    if abs(self.position[0] - x) &lt; 0.1 and abs(self.position[1] - y) &lt; 0.1:
+        return True
+    else:
+        return False</code></pre>
+</details>
+</dd>
+<dt id="Robot.Robot.draw_lines_of_pass"><code class="name flex">
+<span>def <span class="ident">draw_lines_of_pass</span></span>(<span>self, screen, Robots)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def draw_lines_of_pass(self, screen, Robots):
+    points = []
+    allpoints = []
+    if self.ball_handler == 1:
+        print(self.otherRobots)
+        for robot in Robots:
+            if robot.ball_handler != 1:
+                myLocation = [self.position[0], self.position[1]]
+                buddyLocation = [robot.position[0], robot.position[1]]
+                ang2Robots = np.round(
+                    np.arctan2(
+                        myLocation[1] - buddyLocation[1],
+                        myLocation[0] - buddyLocation[0],
+                    ),
+                    2,
+                )
+                angOponent = ang2Robots + 3.14 / 2
+                x = MARGIN2PASS * np.cos(angOponent)
+                y = MARGIN2PASS * np.sin(angOponent)
+                points = [
+                    coord2FieldCoord(myLocation[0] - x, myLocation[1] - y),
+                    coord2FieldCoord(myLocation[0] + x, myLocation[1] + y),
+                    coord2FieldCoord(buddyLocation[0] + x, buddyLocation[1] + y),
+                    coord2FieldCoord(buddyLocation[0] - x, buddyLocation[1] - y),
+                    coord2FieldCoord(myLocation[0] - x, myLocation[1] - y),
+                ]
+                allpoints.append(points)
+                pygame.draw.polygon(screen, COLORS[&#34;yellow&#34;], points, width=1)
+                pygame.draw.line(
+                    screen,
+                    COLORS[&#34;yellow&#34;],
+                    coord2FieldCoord(myLocation[0], myLocation[1]),
+                    coord2FieldCoord(buddyLocation[0], buddyLocation[1]),
+                    width=1,
+                )
+                for opponent in self.otherRobots:
+                    if len(self.otherRobots) &gt; 0:
+                        if insidePolygon(
+                            myLocation,
+                            buddyLocation,
+                            ang2Robots,
+                            angOponent,
+                            opponent,
+                            MARGIN2PASS,
+                            screen,
+                        ):
+                            pygame.draw.polygon(
+                                screen, COLORS[&#34;red&#34;], points, width=2
+                            )</code></pre>
+</details>
+</dd>
+<dt id="Robot.Robot.draw_opponents"><code class="name flex">
+<span>def <span class="ident">draw_opponents</span></span>(<span>self, screen)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def draw_opponents(self, screen):
+    for opponent in self.otherRobots:
+        pygame.draw.circle(
+            screen,
+            COLORS[&#34;red&#34;],
+            coord2FieldCoord(opponent[0], opponent[1]),
+            ROBOT_SIZE,
+        )</code></pre>
+</details>
+</dd>
+<dt id="Robot.Robot.draw_robot"><code class="name flex">
+<span>def <span class="ident">draw_robot</span></span>(<span>self, screen)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def draw_robot(self, screen):
+    x = self.position[0] * 10 * FACTOR + FIELD_SIZE[&#34;wall&#34;][0] / 2
+    y = -self.position[1] * 10 * FACTOR + FIELD_SIZE[&#34;wall&#34;][1] / 2 + YOFFSET
+    ang = self.orientation
+
+    points = []
+    points.append(
+        (
+            x + ROBOT_SIZE / 2 * np.cos(np.radians(30 - ang)),
+            y + ROBOT_SIZE / 2 * np.sin(np.radians(30 - ang)),
+        )
+    )
+    NumberOfPoints = 6
+    angOffset = 360 / NumberOfPoints / 2
+    for i in range(NumberOfPoints):
+        angInc = i * 360 / NumberOfPoints
+        points.append(
+            (
+                x + ROBOT_SIZE * np.cos(np.radians(angInc + angOffset - ang)),
+                y + ROBOT_SIZE * np.sin(np.radians(angInc + angOffset - ang)),
+            )
+        )
+    points.append(
+        (
+            x + ROBOT_SIZE / 2 * np.cos(np.radians(-30 - ang)),
+            y + ROBOT_SIZE / 2 * np.sin(np.radians(-30 - ang)),
+        )
+    )
+
+    pygame.draw.polygon(screen, COLORS[&#34;blue&#34;], points)
+    pygame.draw.circle(
+        screen,
+        COLORS[&#34;yellow&#34;],
+        (
+            self.ball_position[0] * 10 * FACTOR + FIELD_SIZE[&#34;wall&#34;][0] / 2,
+            -self.ball_position[1] * 10 * FACTOR
+            + FIELD_SIZE[&#34;wall&#34;][1] / 2
+            + YOFFSET,
+        ),
+        FACTOR,
+    )
+
+    text = SMALLFONT.render(str(self.robotID), True, (255, 255, 255))
+
+    screen.blit(text, (x - text.get_width() / 2, y - text.get_height() / 2))</code></pre>
+</details>
+</dd>
+<dt id="Robot.Robot.draw_robotInfo"><code class="name flex">
+<span>def <span class="ident">draw_robotInfo</span></span>(<span>self, screen)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def draw_robotInfo(self, screen):
+    robotID = self.robotID - 1
+    pygame.draw.rect(
+        screen,
+        COLORS[&#34;button&#34;],
+        (
+            robotID * int(RESOLUTION[0] / NUMBER_OF_ROBOTS),
+            160 * FACTOR + MENUS_SIZE * RESOLUTION[1],
+            int(RESOLUTION[0] / NUMBER_OF_ROBOTS) - FACTOR,
+            RESOLUTION[1] - MENUS_SIZE * RESOLUTION[1] - 160 * FACTOR,
+        ),
+        border_radius=5,
+    )
+    text = SMALLFONT.render(&#34;Robot_&#34; + str(self.robotID), True, (255, 255, 255))
+    screen.blit(
+        text,
+        (
+            robotID * int(RESOLUTION[0] / NUMBER_OF_ROBOTS) + 2 * FACTOR,
+            160 * FACTOR + MENUS_SIZE * RESOLUTION[1] + 2 * FACTOR,
+        ),
+    )
+    text = SMALLFONT.render(
+        &#34;Skill: &#34; + str(SKILLSGUI[self.packet[0]]), True, (255, 255, 255)
+    )
+    screen.blit(
+        text,
+        (
+            robotID * int(RESOLUTION[0] / NUMBER_OF_ROBOTS) + 2 * FACTOR,
+            160 * FACTOR + MENUS_SIZE * RESOLUTION[1] + 2 * FACTOR + 7 * FACTOR,
+        ),
+    )
+    text = SMALLFONT.render(&#34;Args: &#34; + str(self.packet[1:]), True, (255, 255, 255))
+    screen.blit(
+        text,
+        (
+            robotID * int(RESOLUTION[0] / NUMBER_OF_ROBOTS) + 2 * FACTOR,
+            160 * FACTOR + MENUS_SIZE * RESOLUTION[1] + 2 * FACTOR + 14 * FACTOR,
+        ),
+    )
+    text = SMALLFONT.render(
+        &#34;BallHandler: &#34; + str(strategy.BallHandler), True, (255, 255, 255)
+    )
+    screen.blit(
+        text,
+        (
+            robotID * int(RESOLUTION[0] / NUMBER_OF_ROBOTS)
+            + 30 * FACTOR
+            + 2 * FACTOR,
+            160 * FACTOR + MENUS_SIZE * RESOLUTION[1] + 2 * FACTOR + 21 * FACTOR,
+        ),
+    )
+    text = SMALLFONT.render(
+        &#34;CanShoot: &#34; + str(strategy.CanShoot), True, (255, 255, 255)
+    )
+    screen.blit(
+        text,
+        (
+            robotID * int(RESOLUTION[0] / NUMBER_OF_ROBOTS) + 2 * FACTOR,
+            160 * FACTOR + MENUS_SIZE * RESOLUTION[1] + 2 * FACTOR + 21 * FACTOR,
+        ),
+    )
+    text = SMALLFONT.render(
+        &#34;CanGoal: &#34; + str(strategy.CanGoal), True, (255, 255, 255)
+    )
+    screen.blit(
+        text,
+        (
+            robotID * int(RESOLUTION[0] / NUMBER_OF_ROBOTS)
+            + 30 * FACTOR
+            + 2 * FACTOR,
+            160 * FACTOR + MENUS_SIZE * RESOLUTION[1] + 2 * FACTOR + 28 * FACTOR,
+        ),
+    )
+    text = SMALLFONT.render(
+        &#34;CanPass: &#34; + str(strategy.CanPass), True, (255, 255, 255)
+    )
+    screen.blit(
+        text,
+        (
+            robotID * int(RESOLUTION[0] / NUMBER_OF_ROBOTS) + 2 * FACTOR,
+            160 * FACTOR + MENUS_SIZE * RESOLUTION[1] + 2 * FACTOR + 28 * FACTOR,
+        ),
+    )
+    text = TINYFONT.render(str(strategy.args[1:]), True, (255, 255, 255))
+    screen.blit(
+        text,
+        (
+            robotID * int(RESOLUTION[0] / NUMBER_OF_ROBOTS) + 2 * FACTOR,
+            160 * FACTOR + MENUS_SIZE * RESOLUTION[1] + 2 * FACTOR + 35 * FACTOR,
+        ),
+    )
+    text = TINYFONT.render(str(self.skill), True, (255, 255, 255))
+    screen.blit(
+        text,
+        (
+            robotID * int(RESOLUTION[0] / NUMBER_OF_ROBOTS) + 2 * FACTOR,
+            160 * FACTOR + MENUS_SIZE * RESOLUTION[1] + 2 * FACTOR + 42 * FACTOR,
+        ),
+    )</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="two-column">
+<li><code><a title="Robot.coord2FieldCoord" href="#Robot.coord2FieldCoord">coord2FieldCoord</a></code></li>
+<li><code><a title="Robot.dataFusion" href="#Robot.dataFusion">dataFusion</a></code></li>
+<li><code><a title="Robot.getInfo" href="#Robot.getInfo">getInfo</a></code></li>
+<li><code><a title="Robot.get_intersect" href="#Robot.get_intersect">get_intersect</a></code></li>
+<li><code><a title="Robot.insidePolygon" href="#Robot.insidePolygon">insidePolygon</a></code></li>
+<li><code><a title="Robot.sendInfo" href="#Robot.sendInfo">sendInfo</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="Robot.Robot" href="#Robot.Robot">Robot</a></code></h4>
+<ul class="">
+<li><code><a title="Robot.Robot.checkPosition" href="#Robot.Robot.checkPosition">checkPosition</a></code></li>
+<li><code><a title="Robot.Robot.draw_lines_of_pass" href="#Robot.Robot.draw_lines_of_pass">draw_lines_of_pass</a></code></li>
+<li><code><a title="Robot.Robot.draw_opponents" href="#Robot.Robot.draw_opponents">draw_opponents</a></code></li>
+<li><code><a title="Robot.Robot.draw_robot" href="#Robot.Robot.draw_robot">draw_robot</a></code></li>
+<li><code><a title="Robot.Robot.draw_robotInfo" href="#Robot.Robot.draw_robotInfo">draw_robotInfo</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

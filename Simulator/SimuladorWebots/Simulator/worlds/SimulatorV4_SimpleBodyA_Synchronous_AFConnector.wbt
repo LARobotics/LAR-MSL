@@ -1,0 +1,570 @@
+#VRML_SIM R2023a utf8
+
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2022b/projects/objects/backgrounds/protos/TexturedBackground.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2022b/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2022b/projects/objects/floors/protos/RectangleArena.proto"
+
+WorldInfo {
+  ERP 0
+  basicTimeStep 50
+  optimalThreadCount 12
+  physicsDisableTime 0
+}
+Viewpoint {
+  fieldOfView 0.75
+  orientation -0.34643893043016605 0.2473949382759863 0.9048623165972951 1.994236878782572
+  position 9.951288488861453 -28.534524705968877 26.93372433137162
+  follow "robot1"
+  followType "None"
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+  castShadows FALSE
+}
+DEF Robot1 Robot {
+  translation -7.2841 2.35566 0.099006
+  rotation -0.0005017544846990913 -2.5542593037508444e-05 0.9999998737949986 2.428312696363956
+  children [
+    Transform {
+      translation 0 0 0.055
+      children [
+        Shape {
+          appearance Appearance {
+            texture ImageTexture {
+              url [
+                "../../OtherFiles/Texture.png"
+              ]
+              filtering 1
+            }
+          }
+          geometry Cylinder {
+            height 0.1
+            radius 0.24
+            subdivision 6
+          }
+          castShadows FALSE
+        }
+      ]
+    }
+    DEF Connector Connector {
+      translation 0.35 0 0
+      model "magnetic"
+      autoLock TRUE
+      distanceTolerance 0.2
+      axisTolerance 3.14
+      rotationTolerance 3.14
+      snap FALSE
+    }
+    Solid {
+      rotation 0 1 0 0
+      children [
+        DEF Robot1Body Shape {
+          appearance PBRAppearance {
+            baseColor 0.25 0.25 0.25
+            roughness 1
+            metalness 0
+          }
+          geometry Cylinder {
+            height 0.2
+            radius 0.25
+            subdivision 6
+          }
+          castShadows FALSE
+        }
+      ]
+    }
+  ]
+  name "robot1"
+  boundingObject USE Robot1Body
+  physics Physics {
+  }
+  controller "RobotControllerV5"
+  controllerArgs [
+    ""
+  ]
+  supervisor TRUE
+  cpuConsumption 0
+}
+DEF Robot2 Robot {
+  translation -1.04096 -5.09526 0.0977586
+  rotation -0.0005017544846990913 -2.5542593037508444e-05 0.9999998737949986 2.428312696363956
+  children [
+    DEF Connector Connector {
+      translation 0.35 0 0
+      model "magnetic"
+      autoLock TRUE
+      distanceTolerance 0.2
+      axisTolerance 3.14
+      rotationTolerance 3.14
+      snap FALSE
+    }
+    Transform {
+      translation 0 0 0.055
+      children [
+        Shape {
+          appearance Appearance {
+            texture ImageTexture {
+              url [
+                "../../OtherFiles/Texture.png"
+              ]
+              filtering 1
+            }
+          }
+          geometry Cylinder {
+            height 0.1
+            radius 0.24
+            subdivision 6
+          }
+          castShadows FALSE
+        }
+      ]
+    }
+    Solid {
+      rotation 0 1 0 0
+      children [
+        DEF Robot2Body Shape {
+          appearance PBRAppearance {
+            baseColor 0.25 0.25 0.25
+            roughness 1
+            metalness 0
+          }
+          geometry Cylinder {
+            height 0.2
+            radius 0.25
+            subdivision 6
+          }
+          castShadows FALSE
+        }
+      ]
+    }
+  ]
+  name "robot2"
+  boundingObject USE Robot2Body
+  physics Physics {
+  }
+  controller "RobotControllerV5"
+  controllerArgs [
+    ""
+  ]
+  supervisor TRUE
+  cpuConsumption 1
+}
+DEF Robot3 Robot {
+  translation -2.08377 -0.386186 0.0959159
+  rotation -0.0005017544846990913 -2.5542593037508444e-05 0.9999998737949986 2.428312696363956
+  children [
+    DEF Connector Connector {
+      translation 0.35 0 0
+      model "magnetic"
+      autoLock TRUE
+      distanceTolerance 0.2
+      axisTolerance 3.14
+      rotationTolerance 3.14
+      snap FALSE
+    }
+    Transform {
+      translation 0 0 0.055
+      children [
+        Shape {
+          appearance Appearance {
+            texture ImageTexture {
+              url [
+                "../../OtherFiles/Texture.png"
+              ]
+              filtering 1
+            }
+          }
+          geometry Cylinder {
+            height 0.1
+            radius 0.24
+            subdivision 6
+          }
+          castShadows FALSE
+        }
+      ]
+    }
+    Solid {
+      rotation 0 1 0 0
+      children [
+        DEF Robot3Body Shape {
+          appearance PBRAppearance {
+            baseColor 0.25 0.25 0.25
+            roughness 1
+            metalness 0
+          }
+          geometry Cylinder {
+            height 0.2
+            radius 0.25
+            subdivision 6
+          }
+          castShadows FALSE
+        }
+      ]
+    }
+  ]
+  name "robot3"
+  boundingObject USE Robot3Body
+  physics Physics {
+    damping Damping {
+      linear 0
+      angular 0
+    }
+  }
+  controller "RobotControllerV5"
+  controllerArgs [
+    ""
+  ]
+  supervisor TRUE
+  cpuConsumption 1
+}
+DEF Robot4 Robot {
+  translation -3.5653 -0.639571 0.101122
+  rotation -0.0005017544846990913 -2.5542593037508444e-05 0.9999998737949986 2.428312696363956
+  children [
+    DEF Connector Connector {
+      translation 0.35 0 0
+      model "magnetic"
+      autoLock TRUE
+      distanceTolerance 0.2
+      axisTolerance 3.14
+      rotationTolerance 3.14
+      snap FALSE
+    }
+    Transform {
+      translation 0 0 0.055
+      children [
+        Shape {
+          appearance Appearance {
+            texture ImageTexture {
+              url [
+                "../../OtherFiles/Texture.png"
+              ]
+              filtering 1
+            }
+          }
+          geometry Cylinder {
+            height 0.1
+            radius 0.24
+            subdivision 6
+          }
+          castShadows FALSE
+        }
+      ]
+    }
+    Solid {
+      rotation 0 1 0 0
+      children [
+        DEF Robot4Body Shape {
+          appearance PBRAppearance {
+            baseColor 0.25 0.25 0.25
+            roughness 1
+            metalness 0
+          }
+          geometry Cylinder {
+            height 0.2
+            radius 0.25
+            subdivision 6
+          }
+          castShadows FALSE
+        }
+      ]
+    }
+  ]
+  name "robot4"
+  boundingObject USE Robot4Body
+  physics Physics {
+    damping Damping {
+      linear 0
+      angular 0
+    }
+  }
+  controller "RobotControllerV5"
+  controllerArgs [
+    ""
+  ]
+  supervisor TRUE
+  cpuConsumption 1
+}
+DEF Robot5 Robot {
+  translation -10.4088 -0.963942 0.0984364
+  rotation -0.004377348851284638 -0.012302696771494056 0.9999147375997529 0.072122
+  children [
+    DEF Connector Connector {
+      translation 0.35 0 0
+      model "magnetic"
+      autoLock TRUE
+      distanceTolerance 0.2
+      axisTolerance 3.14
+      rotationTolerance 3.14
+      snap FALSE
+    }
+    Transform {
+      translation 0 0 0.055
+      children [
+        Shape {
+          appearance Appearance {
+            texture ImageTexture {
+              url [
+                "../../OtherFiles/Texture.png"
+              ]
+              filtering 1
+            }
+          }
+          geometry Cylinder {
+            height 0.1
+            radius 0.24
+            subdivision 6
+          }
+          castShadows FALSE
+        }
+      ]
+    }
+    Solid {
+      rotation 0 1 0 0
+      children [
+        DEF Robot5Body Shape {
+          appearance PBRAppearance {
+            baseColor 0.25 0.25 0.25
+            roughness 1
+            metalness 0
+          }
+          geometry Cylinder {
+            height 0.2
+            radius 0.25
+            subdivision 6
+          }
+          castShadows FALSE
+        }
+      ]
+    }
+  ]
+  name "robot5"
+  boundingObject USE Robot5Body
+  physics Physics {
+    damping Damping {
+      linear 0
+      angular 0
+    }
+  }
+  controller "RobotControllerV5"
+  controllerArgs [
+    ""
+  ]
+  supervisor TRUE
+  cpuConsumption 1
+}
+DEF Bola Solid {
+  translation 5.74 -1.0551 0.1
+  rotation 0 1 0 0
+  children [
+    DEF Connector Connector {
+      model "magnetic"
+      autoLock TRUE
+      distanceTolerance 0
+      axisTolerance 0
+      rotationTolerance 0
+      snap FALSE
+    }
+    DEF Bola_Body Shape {
+      appearance PBRAppearance {
+        baseColor 1 1 0
+        roughness 1
+        metalness 0
+        IBLStrength 10
+      }
+      geometry Sphere {
+        radius 0.1
+      }
+      castShadows FALSE
+    }
+  ]
+  boundingObject USE Bola_Body
+  physics Physics {
+    density 100
+    damping Damping {
+    }
+  }
+}
+DEF Baliza1 Transform {
+  translation 11.25 0 0
+  children [
+    DEF Goal3 Solid {
+      translation -0.25 0 1.125
+      children [
+        DEF Goal3 Shape {
+          appearance PBRAppearance {
+            baseColor 0 0.5 1
+            roughness 1
+            metalness 0
+          }
+          geometry Box {
+            size 0.5 2.625 0.1
+          }
+        }
+      ]
+      name "solid(4)"
+      boundingObject USE Goal3
+    }
+    DEF Goal1 Solid {
+      translation -0.25 1.275 0.51
+      children [
+        DEF Goal1 Shape {
+          appearance PBRAppearance {
+            baseColor 0 0.5 1
+            roughness 1
+            metalness 0
+          }
+          geometry Box {
+            size 0.5 0.1 1.125
+          }
+        }
+      ]
+      name "solid(2)"
+      boundingObject USE Goal1
+    }
+    DEF Goal2 Solid {
+      translation -0.25 -1.275 0.51
+      children [
+        DEF Goal2 Shape {
+          appearance PBRAppearance {
+            baseColor 0 0.5 1
+            roughness 1
+            metalness 0
+          }
+          geometry Box {
+            size 0.5 0.1 1.125
+          }
+        }
+      ]
+      name "solid(3)"
+      boundingObject USE Goal2
+    }
+    DEF Goal0 Solid {
+      translation 0 0 0.5075
+      children [
+        DEF Goal0 Shape {
+          appearance PBRAppearance {
+            baseColor 0 0.5 1
+            roughness 1
+            metalness 0
+          }
+          geometry Box {
+            size 0.1 2.65 1.125
+          }
+        }
+      ]
+      name "solid(1)"
+      boundingObject USE Goal0
+    }
+  ]
+}
+DEF Baliza2 Transform {
+  translation -11.25 0 0
+  rotation 0 0 1 3.14159
+  children [
+    DEF Goal3 Solid {
+      translation -0.25 0 1.125
+      children [
+        DEF Goal3 Shape {
+          appearance PBRAppearance {
+            baseColor 1 0.25 1
+            roughness 1
+            metalness 0
+          }
+          geometry Box {
+            size 0.5 2.625 0.1
+          }
+        }
+      ]
+      name "Goal3_1"
+      boundingObject USE Goal3
+    }
+    DEF Goal1 Solid {
+      translation -0.25 1.275 0.51
+      children [
+        DEF Goal1 Shape {
+          appearance PBRAppearance {
+            baseColor 1 0.25 1
+            roughness 1
+            metalness 0
+          }
+          geometry Box {
+            size 0.5 0.1 1.125
+          }
+        }
+      ]
+      name "Goal1_1"
+      boundingObject USE Goal1
+    }
+    DEF Goal2 Solid {
+      translation -0.25 -1.275 0.51
+      children [
+        DEF Goal2 Shape {
+          appearance PBRAppearance {
+            baseColor 1 0.25 1
+            roughness 1
+            metalness 0
+          }
+          geometry Box {
+            size 0.5 0.1 1.125
+          }
+        }
+      ]
+      name "Goal2_1"
+      boundingObject USE Goal2
+    }
+    DEF Goal0 Solid {
+      translation 0 0 0.5075
+      children [
+        DEF Goal0 Shape {
+          appearance PBRAppearance {
+            baseColor 1 0.25 1
+            roughness 1
+            metalness 0
+          }
+          geometry Box {
+            size 0.1 2.65 1.125
+          }
+        }
+      ]
+      name "Goal0_1"
+      boundingObject USE Goal0
+    }
+  ]
+}
+Robot {
+  children [
+    Display {
+      children [
+        RectangleArena {
+          rotation 0 1 0 0
+          floorSize 24 16
+          floorTileSize 24 16
+          floorAppearance Appearance {
+            texture ImageTexture {
+              url [
+                "../../OtherFiles/Campo.png"
+              ]
+              repeatS FALSE
+              repeatT FALSE
+            }
+          }
+          wallThickness 0.2
+          wallHeight 0.5
+          wallAppearance PBRAppearance {
+            baseColor 0.5 0.5 0.5
+            roughness 1
+            metalness 0
+          }
+        }
+      ]
+      width 240
+      height 160
+    }
+  ]
+  name "Display"
+  controller "Display"
+  supervisor TRUE
+  synchronization FALSE
+}

@@ -1,0 +1,147 @@
+#VRML_SIM R2022b utf8
+# license: Apache License 2.0
+# license url: http://www.apache.org/licenses/LICENSE-2.0.
+# documentation url: https://www.cyberbotics.com/doc/guide/robotino3
+# This is a PROTO file for Webots for the robot Robotino 3 from Festo.
+# changed by Thomas Feldmeier 2020, www.servicerobotik-ulm.de
+# template language: javascript
+
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2022b/projects/robots/festo/robotino3/protos/Robotino3Wheel.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2022b/projects/appearances/protos/MattePaint.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2022b/projects/appearances/protos/BrushedAluminium.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2022b/projects/appearances/protos/Rubber.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2022b/projects/appearances/protos/GlossyPaint.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2022b/projects/objects/geometries/protos/Rectangle.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2022b/projects/objects/factory/tools/protos/CapScrew.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2022b/projects/devices/sharp/protos/SharpGP2D120.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2022b/projects/devices/sharp/protos/SharpGP2Y0A41SK0F.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2022b/projects/devices/sharp/protos/SharpGP2Y0A02YK0F.proto"
+
+PROTO Robotino3 [
+  field  SFVec3f     translation       0 0 0
+  field  SFRotation  rotation          0 0 1 0
+  field  SFString    name              "Robotino 3"
+  field  SFString    model             "Festo - Robotino 3"
+  field  SFString    controller        "<generic>"
+  field  MFString    controllerArgs    []
+  field  SFString    window            "<generic>"
+  field  SFString    customData        ""
+  field  SFBool      supervisor        FALSE
+  field  SFBool      synchronization   TRUE
+  field  SFBool      selfCollision     FALSE   # Enables/disables the detection of collisions within the robot.
+  field  MFNode      topSlot           []      # Extends the robot.
+  field  MFNode      bodySlot          []      # Extends the robot with a platform.
+  field  MFNode      cameraSlot        []      # Extends the robot with a camera.
+  field  MFNode      middleSlot        []      # Extends the robot.
+  field  MFNode      bottomSlot        []      # Extends the robot.
+  field  SFString{"SharpGP2D120", "SharpGP2Y0A41SK0F", "SharpGP2Y0A02YK0F"}  infraredSensorModel    "SharpGP2Y0A41SK0F"      # Extends the robot with infrared sensors.
+]
+{
+  %<
+    const IRname = fields.infraredSensorModel.value;
+  >%
+  Robot {
+    translation IS translation
+    rotation IS rotation
+    controller IS controller
+    controllerArgs IS controllerArgs
+    window IS window
+    customData IS customData
+    supervisor IS supervisor
+    synchronization IS synchronization
+    selfCollision IS selfCollision
+    name IS name
+    model IS model
+    children [
+      Robotino3Wheel {
+        number 0
+      }
+      Robotino3Wheel {
+        number 1
+      }
+      Robotino3Wheel {
+        number 2
+      }
+      # rotate whole body to x=front, y=left, z=up
+      Transform {
+      rotation 0 0 1 1.57079632679
+      children [
+      DEF EXT_webcam Transform {
+        children IS cameraSlot
+      }
+      DEF EXT_platform Transform {
+        translation 0 0 0.28
+        children IS bodySlot
+      }
+      DEF EXT_bottom_pos Transform {
+        translation 0 -0.12 0.062
+        rotation 1 0 0 -1.5708
+        children IS bottomSlot
+      }
+      DEF EXT_middle_pos Transform {
+        translation 0.0299983 -0.062 0.084
+        rotation 0 0 -1 -1.5708
+        children IS middleSlot
+      }
+      DEF EXT_top_pos Transform {
+        translation -0.03 -0.0328 0.2128
+        rotation 0 0 1 -1.5708
+        children IS topSlot
+      }
+      Accelerometer {
+      }
+      InertialUnit {
+      }
+      Gyro {
+      }
+      Compass {
+      }
+      
+      DEF base_black_rubber Transform {
+        translation 0 0 0.035
+        children [
+          Shape {
+            appearance MattePaint {
+              baseColor 0.11765 0.11765 0.11765
+            }
+            geometry Mesh {
+              url "https://raw.githubusercontent.com/cyberbotics/webots/R2022b/projects/robots/festo/robotino3/protos/meshes/base_black_rubber.obj"
+            }
+          }
+        ]
+      }
+      DEF base_extension_plate Transform {
+        translation 0 0 0.035
+        children [
+          Shape {
+            appearance BrushedAluminium {
+              colorOverride 0.8 0.8 0.8
+              textureTransform TextureTransform {
+                scale 10 32
+              }
+            }
+            geometry Mesh {
+              url "https://raw.githubusercontent.com/cyberbotics/webots/R2022b/projects/robots/festo/robotino3/protos/meshes/base_extension_plate.obj"
+            }
+          }
+        ]
+      }
+     
+      ]} # end transform & rotate whole body
+    ]
+    boundingObject Transform {
+      translation 0 0 0.153
+      children [
+        Cylinder {
+          height 0.276
+          radius 0.2266
+        }
+      ]
+    }
+    physics Physics {
+      density -1
+      mass 20
+      centerOfMass 0 0 -0.1
+    }
+  }
+}

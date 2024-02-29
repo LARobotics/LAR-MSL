@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<robot name="C:/Users/nandi/Desktop/Robot.urdf" xmlns:xacro="http://ros.org/wiki/xacro">
+  <link name="base_link">
+    <visual>
+      <origin xyz="0 0 0.415" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.45" length="0.8"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.415" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.45" length="0.8"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="motor2" type="continuous">
+    <parent link="base_link"/>
+    <child link="solid(1)"/>
+    <axis xyz="-0.000005 1 -0.000002"/>
+    <limit effort="10" velocity="10"/>
+    <origin xyz="0 -0.5 0.05" rpy="-1.885625 1.570791 2.826762"/>
+  </joint>
+  <link name="solid(1)">
+    <visual>
+      <origin xyz="-0.06 0 0" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.05" length="0.1"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="-0.06 0 0" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.05" length="0.1"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="motor1" type="continuous">
+    <parent link="base_link"/>
+    <child link="solid"/>
+    <axis xyz="-0.000005 1 -0.000002"/>
+    <limit effort="10" velocity="10"/>
+    <origin xyz="-0.06 0.5 0.05" rpy="-1.885625 1.570791 2.826762"/>
+  </joint>
+  <link name="solid">
+    <visual>
+      <origin xyz="-0.06 0 0" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.05" length="0.1"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="-0.06 0 0" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.05" length="0.1"/>
+      </geometry>
+    </collision>
+  </link>
+</robot>

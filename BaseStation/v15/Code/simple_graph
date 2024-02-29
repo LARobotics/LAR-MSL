@@ -1,0 +1,5 @@
+digraph {
+	A [label="Process A"]
+	B [label="Process B"]
+	A -> B [label="Data Flow"]
+}

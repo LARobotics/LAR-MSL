@@ -1,0 +1,28 @@
+{
+    "Ball" : {
+        "Shoot" : {
+            "Goal" : ["DEFEND", "KICK", "MOVE", "MOVE", "MOVE"],
+            "!Goal" : {
+                "Pass":["DEFEND", "KICK", "RECIEVE", "MOVE", "MOVE"],
+                "!Pass":["DEFEND", "MOVE", "MOVE", "MOVE", "MOVE"]
+            }
+        },
+        "!Shoot" : {
+            "Pass":["DEFEND", "KICK", "RECIEVE", "MOVE", "MOVE"],
+            "!Pass":["DEFEND", "MOVE", "MOVE", "MOVE", "MOVE"]
+        }
+    },
+    "!Ball" : {
+        "knownBall" : {
+            "free" : ["DEFEND", "ATTACK", "COVER", "COVER", "COVER"],
+            "ourBall" : ["DEFEND", "ATTACK", "MOVE", "MOVE", "MOVE"],
+            "transition" : {
+                "pass": ["DEFEND", "RECIEVE", "MOVE", "MOVE", "MOVE"],
+                "goal" : ["DEFEND", "MOVE", "MOVE", "MOVE", "MOVE"]
+            },
+            "opponent" : ["DEFEND", "COVER", "COVER", "COVER", "COVER"]
+        },
+        "!knownBall" : ["DEFEND", "MOVE", "MOVE", "MOVE", "MOVE"]
+    }
+}
+ 

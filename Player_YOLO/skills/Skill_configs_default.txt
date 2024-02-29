@@ -1,0 +1,99 @@
+package skills
+
+/*
+!robot1 AND !robot2 AND !robot3 AND !robot4 AND !robot5
+
+***
+Atack variables
+***
+*/
+const Kp_atack = 0.45
+const Ki_atack = 0.0
+const Kd_atack = 0.0
+const outputLimit_PID_atack = 80.0
+const Katracao_atack = 0.55
+const Kintensidade_atack = 0.03
+const outputLimit_atractor_atack = 80.0
+
+/*
+***
+Receive variables
+***
+*/
+const Kp_receive_rot = 0.05
+const Ki_receive_rot = 0.0
+const Kd_receive_rot = 0.0
+const outputLimit_PID_receive_rot = 20.0
+const Kp_receive_vel = 0.12
+const Ki_receive_vel = 0.0
+const Kd_receive_vel = 0.0
+const outputLimit_PID_receive_vel = 40.0
+const Katracao_receive = 0.0
+const Kintensidade_receive = 0.0
+const outputLimit_atractor_receive = 0.0
+
+/*
+***
+Move variables
+***
+*/
+const Kp_move = 0.2
+const Ki_move = 0.0
+const Kd_move = 0.0
+const outputLimit_PID_move = 20.0
+const Katracao_move = 0.0
+const Kintensidade_move = 0.0
+const outputLimit_atractor_move = 0.0
+
+/*
+***
+Kick variables
+***
+*/
+const Kp_kick = 2.0
+const Ki_kick = 0.0
+const Kd_kick = 0.1
+const outputLimit_PID_kick = 20.0
+const Katracao_kick = 0.0
+const Kintensidade_kick = 0.0
+const outputLimit_atractor_kick = 0.0
+
+/*
+***
+Defend variables
+***
+*/
+const A_ellipse = 900.000
+const B_ellipse = 1400.000
+const Katracao_place = 7.000
+const Kintensidade_place = 0.030
+const outputLimit_atractor_place = 30.000
+const Katracao_defend = 0.040
+const Kintensidade_defend = 0.085
+const outputLimit_atractor_defend = 80.000
+
+/*
+***
+Cover variables
+***
+*/
+const Kp_cover = 0.0
+const Ki_cover = 0.0
+const Kd_cover = 0.0
+const outputLimit_PID_cover = 0.0
+const Katracao_cover = 0.0
+const Kintensidade_cover = 0.0
+const outputLimit_atractor_cover = 0.0
+
+/*
+***
+Remote Control variables
+***
+*/
+const Kp_remoteControl = 1.0
+const Ki_remoteControl = 0.0
+const Kd_remoteControl = 0.1
+const outputLimit_PID_remoteControl = 30.0
+const Katracao_remoteControl = 0.0
+const Kintensidade_remoteControl = 0.0
+const outputLimit_atractor_remoteControl = 0.0

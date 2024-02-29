@@ -1,0 +1,646 @@
+#VRML_OBJ R2020a utf8
+DEF BOTNROLL_OMNI Robot {
+  translation -0.633626 0.0609469 -0.31564
+  rotation 0.0018836304104741448 0.9999982179161108 -0.0001268900276514306 -3.01344
+  children [
+    DEF SOLID1 Solid {
+      children [
+        DEF WHEEL1 Servo {
+          translation 0 0 0.1
+          rotation 0 0 1 0
+          children [
+            DEF sr1 Servo {
+              translation 0 0.05 0.02
+              rotation 1 0 0 0
+              children [
+                DEF r1 Transform {
+                  rotation 0 0 1 1.5708
+                  children [
+                    DEF SMALL_WHEEL_SHAPE Shape {
+                      appearance Appearance {
+                        material Material {
+                          diffuseColor 1 0.752941 0.796078
+                        }
+                      }
+                      geometry Cylinder {
+                        height 0.02
+                        radius 0.01
+                      }
+                    }
+                  ]
+                }
+              ]
+              boundingObject USE r1
+              physics Physics {
+                density -1
+                mass 0.1
+              }
+              maxForce 0
+              position 4082.11
+            }
+            DEF sr2 Servo {
+              translation -0.03535 0.03535 0.02
+              rotation 0.7071067811865476 0.7071067811865476 0 0
+              children [
+                DEF r2 Transform {
+                  rotation 0 0 1 2.27
+                  children [
+                    USE SMALL_WHEEL_SHAPE
+                  ]
+                }
+              ]
+              boundingObject USE r2
+              physics Physics {
+                density -1
+                mass 0.1
+              }
+              maxForce 0
+              position 3930.65
+            }
+            DEF sr3 Servo {
+              translation 0 -0.05 0.02
+              rotation 1 0 0 0
+              children [
+                DEF r3 Transform {
+                  rotation 0 0 1 1.5708
+                  children [
+                    USE SMALL_WHEEL_SHAPE
+                  ]
+                }
+              ]
+              boundingObject USE r3
+              physics Physics {
+                density -1
+                mass 0.1
+              }
+              maxForce 0
+              position -4011.13
+            }
+            DEF sr4 Servo {
+              translation 0.03535 -0.03535 0.02
+              rotation 0.7071067811865476 0.7071067811865476 0 0
+              children [
+                DEF r4 Transform {
+                  rotation 0 0 1 2.27
+                  children [
+                    USE SMALL_WHEEL_SHAPE
+                  ]
+                }
+              ]
+              boundingObject USE r4
+              physics Physics {
+                density -1
+                mass 0.1
+              }
+              maxForce 0
+              position -3761.26
+            }
+            DEF sr5 Servo {
+              translation -0.05 0 0.02
+              children [
+                DEF r5 Transform {
+                  children [
+                    USE SMALL_WHEEL_SHAPE
+                  ]
+                }
+              ]
+              boundingObject USE r5
+              physics Physics {
+                density -1
+                mass 0.1
+              }
+              maxForce 0
+              position 3956.92
+            }
+            DEF sr6 Servo {
+              translation 0.05 0 0.02
+              children [
+                DEF r6 Transform {
+                  children [
+                    USE SMALL_WHEEL_SHAPE
+                  ]
+                }
+              ]
+              boundingObject USE r6
+              physics Physics {
+                density -1
+                mass 0.1
+              }
+              maxForce 0
+              position -4003.55
+            }
+            DEF sr7 Servo {
+              translation -0.03535 -0.03535 0.02
+              rotation -0.7071067811865476 0.7071067811865476 0 0
+              children [
+                DEF r7 Transform {
+                  rotation 0 0 1 0.76
+                  children [
+                    USE SMALL_WHEEL_SHAPE
+                  ]
+                }
+              ]
+              boundingObject USE r7
+              physics Physics {
+                density -1
+                mass 0.1
+              }
+              maxForce 0
+              position 3713.08
+            }
+            DEF sr8 Servo {
+              translation 0.03535 0.03535 0.02
+              rotation -0.7071067811865476 0.7071067811865476 0 0
+              children [
+                DEF r8 Transform {
+                  rotation 0 0 1 0.76
+                  children [
+                    USE SMALL_WHEEL_SHAPE
+                  ]
+                }
+              ]
+              boundingObject USE r8
+              physics Physics {
+                density -1
+                mass 0.1
+              }
+              maxForce 0
+              position -4064.33
+            }
+            DEF WHEEL_TRANS Transform {
+              translation 0 0 0.02
+              rotation 1 0 0 1.5708
+              children [
+                DEF WHEEL_SHAPE Shape {
+                  appearance Appearance {
+                    material Material {
+                      diffuseColor 0.678431 0.847059 0.901961
+                    }
+                  }
+                  geometry Cylinder {
+                    height 0.02
+                    radius 0.05
+                    subdivision 20
+                  }
+                }
+              ]
+            }
+          ]
+          name "wheel1"
+          boundingObject Transform {
+            translation 0 0 0.02
+            rotation 1 0 0 1.5708
+            children [
+              DEF wheel1 Shape {
+                appearance Appearance {
+                  material Material {
+                    emissiveColor 0 1 0
+                    transparency 0.13
+                  }
+                }
+                geometry Cylinder {
+                  height 0.02
+                  radius 0.05
+                }
+              }
+            ]
+          }
+          physics Physics {
+          }
+          position 444.624
+        }
+      ]
+      boundingObject DEF DUMMY Sphere {
+        radius 0.01
+      }
+      physics Physics {
+      }
+    }
+    DEF SOLID2 Solid {
+      rotation 0 1 0 2.09
+      children [
+        DEF WHEEL2 Servo {
+          translation 0 0 0.1
+          rotation 0 0 1 0.00240581
+          children [
+            DEF sr1 Servo {
+              translation 0 0.05 0.02
+              rotation 1 0 0 0
+              children [
+                DEF r1 Transform {
+                  rotation 0 0 1 1.5708
+                  children [
+                    DEF SMALL_WHEEL_SHAPE Shape {
+                      appearance Appearance {
+                        material Material {
+                          diffuseColor 1 0.752941 0.796078
+                        }
+                      }
+                      geometry Cylinder {
+                        height 0.02
+                        radius 0.01
+                      }
+                    }
+                  ]
+                }
+              ]
+              boundingObject USE r1
+              physics Physics {
+                density -1
+                mass 0.1
+              }
+              maxForce 0
+              position 4082.11
+            }
+            DEF sr2 Servo {
+              translation -0.03535 0.03535 0.02
+              rotation 0.7071067811865476 0.7071067811865476 0 0
+              children [
+                DEF r2 Transform {
+                  rotation 0 0 1 2.27
+                  children [
+                    USE SMALL_WHEEL_SHAPE
+                  ]
+                }
+              ]
+              boundingObject USE r2
+              physics Physics {
+                density -1
+                mass 0.1
+              }
+              maxForce 0
+              position 3930.65
+            }
+            DEF sr3 Servo {
+              translation 0 -0.05 0.02
+              rotation 1 0 0 0
+              children [
+                DEF r3 Transform {
+                  rotation 0 0 1 1.5708
+                  children [
+                    USE SMALL_WHEEL_SHAPE
+                  ]
+                }
+              ]
+              boundingObject USE r3
+              physics Physics {
+                density -1
+                mass 0.1
+              }
+              maxForce 0
+              position -4011.13
+            }
+            DEF sr4 Servo {
+              translation 0.03535 -0.03535 0.02
+              rotation 0.7071067811865476 0.7071067811865476 0 0
+              children [
+                DEF r4 Transform {
+                  rotation 0 0 1 2.27
+                  children [
+                    USE SMALL_WHEEL_SHAPE
+                  ]
+                }
+              ]
+              boundingObject USE r4
+              physics Physics {
+                density -1
+                mass 0.1
+              }
+              maxForce 0
+              position -3761.26
+            }
+            DEF sr5 Servo {
+              translation -0.05 0 0.02
+              children [
+                DEF r5 Transform {
+                  children [
+                    USE SMALL_WHEEL_SHAPE
+                  ]
+                }
+              ]
+              boundingObject USE r5
+              physics Physics {
+                density -1
+                mass 0.1
+              }
+              maxForce 0
+              position 3956.92
+            }
+            DEF sr6 Servo {
+              translation 0.05 0 0.02
+              children [
+                DEF r6 Transform {
+                  children [
+                    USE SMALL_WHEEL_SHAPE
+                  ]
+                }
+              ]
+              boundingObject USE r6
+              physics Physics {
+                density -1
+                mass 0.1
+              }
+              maxForce 0
+              position -4003.55
+            }
+            DEF sr7 Servo {
+              translation -0.03535 -0.03535 0.02
+              rotation -0.7071067811865476 0.7071067811865476 0 0
+              children [
+                DEF r7 Transform {
+                  rotation 0 0 1 0.76
+                  children [
+                    USE SMALL_WHEEL_SHAPE
+                  ]
+                }
+              ]
+              boundingObject USE r7
+              physics Physics {
+                density -1
+                mass 0.1
+              }
+              maxForce 0
+              position 3713.08
+            }
+            DEF sr8 Servo {
+              translation 0.03535 0.03535 0.02
+              rotation -0.7071067811865476 0.7071067811865476 0 0
+              children [
+                DEF r8 Transform {
+                  rotation 0 0 1 0.76
+                  children [
+                    USE SMALL_WHEEL_SHAPE
+                  ]
+                }
+              ]
+              boundingObject USE r8
+              physics Physics {
+                density -1
+                mass 0.1
+              }
+              maxForce 0
+              position -4064.33
+            }
+            USE WHEEL_TRANS
+          ]
+          name "wheel2"
+          boundingObject Transform {
+            translation 0 0 0.02
+            rotation 1 0 0 1.5708
+            children [
+              DEF wheel1 Shape {
+                appearance Appearance {
+                  material Material {
+                    emissiveColor 0 1 0
+                    transparency 0.13
+                  }
+                }
+                geometry Cylinder {
+                  height 0.02
+                  radius 0.05
+                }
+              }
+            ]
+          }
+          physics Physics {
+          }
+          position -333.144
+        }
+      ]
+      boundingObject USE DUMMY
+      physics Physics {
+      }
+    }
+    DEF SOLID3 Solid {
+      rotation 0 1 0 4.18
+      children [
+        DEF WHEEL3 Servo {
+          translation 0 0 0.1
+          rotation 0 0 1 0.00390944
+          children [
+            DEF sr1 Servo {
+              translation 0 0.05 0.02
+              rotation 1 0 0 0
+              children [
+                DEF r1 Transform {
+                  rotation 0 0 1 1.5708
+                  children [
+                    DEF SMALL_WHEEL_SHAPE Shape {
+                      appearance Appearance {
+                        material Material {
+                          diffuseColor 1 0.752941 0.796078
+                        }
+                      }
+                      geometry Cylinder {
+                        height 0.02
+                        radius 0.01
+                      }
+                    }
+                  ]
+                }
+              ]
+              boundingObject USE r1
+              physics Physics {
+                density -1
+                mass 0.1
+              }
+              maxForce 0
+              position 4082.11
+            }
+            DEF sr2 Servo {
+              translation -0.03535 0.03535 0.02
+              rotation 0.7071067811865476 0.7071067811865476 0 0
+              children [
+                DEF r2 Transform {
+                  rotation 0 0 1 2.27
+                  children [
+                    USE SMALL_WHEEL_SHAPE
+                  ]
+                }
+              ]
+              boundingObject USE r2
+              physics Physics {
+                density -1
+                mass 0.1
+              }
+              maxForce 0
+              position 3930.65
+            }
+            DEF sr3 Servo {
+              translation 0 -0.05 0.02
+              rotation 1 0 0 0
+              children [
+                DEF r3 Transform {
+                  rotation 0 0 1 1.5708
+                  children [
+                    USE SMALL_WHEEL_SHAPE
+                  ]
+                }
+              ]
+              boundingObject USE r3
+              physics Physics {
+                density -1
+                mass 0.1
+              }
+              maxForce 0
+              position -4011.13
+            }
+            DEF sr4 Servo {
+              translation 0.03535 -0.03535 0.02
+              rotation 0.7071067811865476 0.7071067811865476 0 0
+              children [
+                DEF r4 Transform {
+                  rotation 0 0 1 2.27
+                  children [
+                    USE SMALL_WHEEL_SHAPE
+                  ]
+                }
+              ]
+              boundingObject USE r4
+              physics Physics {
+                density -1
+                mass 0.1
+              }
+              maxForce 0
+              position -3761.26
+            }
+            DEF sr5 Servo {
+              translation -0.05 0 0.02
+              children [
+                DEF r5 Transform {
+                  children [
+                    USE SMALL_WHEEL_SHAPE
+                  ]
+                }
+              ]
+              boundingObject USE r5
+              physics Physics {
+                density -1
+                mass 0.1
+              }
+              maxForce 0
+              position 3956.92
+            }
+            DEF sr6 Servo {
+              translation 0.05 0 0.02
+              children [
+                DEF r6 Transform {
+                  children [
+                    USE SMALL_WHEEL_SHAPE
+                  ]
+                }
+              ]
+              boundingObject USE r6
+              physics Physics {
+                density -1
+                mass 0.1
+              }
+              maxForce 0
+              position -4003.55
+            }
+            DEF sr7 Servo {
+              translation -0.03535 -0.03535 0.02
+              rotation -0.7071067811865476 0.7071067811865476 0 0
+              children [
+                DEF r7 Transform {
+                  rotation 0 0 1 0.76
+                  children [
+                    USE SMALL_WHEEL_SHAPE
+                  ]
+                }
+              ]
+              boundingObject USE r7
+              physics Physics {
+                density -1
+                mass 0.1
+              }
+              maxForce 0
+              position 3713.08
+            }
+            DEF sr8 Servo {
+              translation 0.03535 0.03535 0.02
+              rotation -0.7071067811865476 0.7071067811865476 0 0
+              children [
+                DEF r8 Transform {
+                  rotation 0 0 1 0.76
+                  children [
+                    USE SMALL_WHEEL_SHAPE
+                  ]
+                }
+              ]
+              boundingObject USE r8
+              physics Physics {
+                density -1
+                mass 0.1
+              }
+              maxForce 0
+              position -4064.33
+            }
+            USE WHEEL_TRANS
+          ]
+          name "wheel3"
+          boundingObject Transform {
+            translation 0 0 0.02
+            rotation 1 0 0 1.5708
+            children [
+              DEF wheel1 Shape {
+                appearance Appearance {
+                  material Material {
+                    emissiveColor 0 1 0
+                    transparency 0.13
+                  }
+                }
+                geometry Cylinder {
+                  height 0.02
+                  radius 0.05
+                }
+              }
+            ]
+          }
+          physics Physics {
+          }
+          position 819.02
+        }
+      ]
+      boundingObject USE DUMMY
+      physics Physics {
+      }
+    }
+    DEF BODY_TRANS Transform {
+      translation 0 0.07 0
+      children [
+        Shape {
+          appearance Appearance {
+            material Material {
+              diffuseColor 0 0 0
+            }
+          }
+          geometry Cylinder {
+            height 0.005
+            radius 0.14
+            subdivision 18
+          }
+        }
+      ]
+    }
+    DistanceSensor {
+      translation 0.1 0 0
+      name "my_distance_sensor"
+      lookupTable [
+        0 0 0
+        2 1000 0
+      ]
+      numberOfRays 3
+      aperture 0.2
+    }
+    Camera {
+      translation 0 0.1 -0.13
+    }
+    Display {
+    }
+  ]
+  boundingObject USE BODY_TRANS
+  physics Physics {
+  }
+  controller "botnroll_omni"
+}

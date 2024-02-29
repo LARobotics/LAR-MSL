@@ -1,0 +1,32 @@
+{
+    "RefBox" : {
+        "Start" : ["STOP", "STOP", "STOP", "STOP", "STOP"],
+        "Stop" : ["STOP", "STOP", "STOP", "STOP", "STOP"],
+        "KickOff" : ["STOP", "STOP", "STOP", "STOP", "STOP"],
+        "FreeKick" : ["STOP", "STOP", "STOP", "STOP", "STOP"],
+        "GoalKick" : ["STOP", "STOP", "STOP", "STOP", "STOP"],
+        "ThrowIn" : ["STOP", "STOP", "STOP", "STOP", "STOP"],
+        "Corner" : ["STOP", "STOP", "STOP", "STOP", "STOP"],
+        "Penalty" : ["STOP", "STOP", "STOP", "STOP", "STOP"],
+        "Park" : ["STOP", "STOP", "STOP", "STOP", "STOP"]
+    },
+    "!RefBox" : {
+        "Ball" : {
+            "CanShoot" : {
+                "CanGoal" : ["KICK", "MOVE", "MOVE", "MOVE", "DEFEND"],
+                "!CanGoal" : {
+                    "CanPass":["KICK", "RECIEVE", "MOVE", "MOVE", "DEFEND"],
+                    "!CanPass":["MOVE", "MOVE", "MOVE", "MOVE", "DEFEND"]
+                }
+            },
+            "!CanShoot" : {
+                "CanPass":["KICK", "RECIEVE", "MOVE", "MOVE", "DEFEND"],
+                "!CanPass":["MOVE", "MOVE", "MOVE", "MOVE", "DEFEND"]
+            }
+        },
+        "!Ball" : {
+            "knownBall" : ["ATTACK", "COVER", "COVER", "COVER", "DEFEND"],
+            "!knownBall" : ["MOVE", "MOVE", "MOVE", "MOVE", "DEFEND"]
+        }
+    }
+}

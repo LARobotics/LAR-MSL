@@ -1,0 +1,249 @@
+package skills
+
+import (
+	"context"
+	"fmt"
+	"math"
+	coms "player/communication"
+	"time"
+)
+
+const RCV_LOOP_TIMEOUT = 33
+
+/*
+**
+*************Receive*************
+
+Command: 4 Bx By
+
+Bx -> target x coordinate
+By -> target y coordinate
+
+*************Receive*************
+**
+*/
+//receive_orientation := NewPid(0.05, 0.0, 0.0, 0.05, 20)
+var receive_orientation = NewPid(Kp_receive_rot, Ki_receive_rot, Kd_receive_rot, 0.05, outputLimit_PID_receive_rot)
+
+// /db_pid := NewPid(1, 0, 0, 0.05, 100)
+// receive_linear_mov := NewPid(0.12, 0.0, 0.0, 0.05, 40)
+var receive_linear_mov = NewPid(Kp_receive_vel, Ki_receive_vel, Kd_receive_vel, 0.05, outputLimit_PID_receive_vel)
+
+func skReceive(args_ [7]int, quit chan int) {
+	fmt.Println("skReceive")
+
+	//var rgb_frame gocv.Mat
+	var kinect_ball_pos position
+	var last_kinect_ball_pos position
+
+	var vel int
+	var current_time, old_time time.Time
+	dir := 0
+
+	arg := args_
+	vare := arg[0]
+	var rot int
+
+	var last_ball_depth, ball_depth float64
+	fmt.Println(last_ball_depth)
+
+	var db coms.LocalDB
+
+	var last_x, x, last_y, y, last_dist float64
+	//var last_omni_x, last_omni_y float64
+	var trajectory_angle float64
+	var erro_angular float64
+	var erro_linear float64
+
+	state_Receive := "WAIT_BALL"
+	last_kinect := false
+
+	var side int
+	for {
+		select {
+		case <-quit:
+			fmt.Println("quit", last_kinect)
+			return
+		default:
+			loop_time_now = time.Now()
+
+			for len(Fns_args) > 0 && vare != -2 {
+				arg = <-Fns_args
+				//fmt.Println("ARGS        :", arg)
+			}
+			resp, _ := client.Send_Kinect(context.Background(), &req)
+			coms.GetDatabase(&db)
+			//fmt.Println(LoopTimePassed(loop_time_now, loop_last_time))
+			//fmt.Println("LEN", resp.Objects)
+			if LoopTimePassed(loop_time_now, loop_last_time) > RCV_LOOP_TIMEOUT {
+				loop_last_time = loop_time_now
+				//fmt.Println("\nreceive_linear_mov", receive_linear_mov, "receive_orientation", receive_orientation)
+				if resp != nil && len(resp.Objects) > 0 && db.Team != nil {
+
+					index := -1
+					for idx, opp := range resp.Objects {
+						if opp.Id == 0 {
+
+							index = idx
+							break
+						}
+					}
+					fmt.Println("\nreceive_linear_mov............................................")
+					if index != -1 && resp.Objects[index].Id == 0 {
+						//fmt.Println("LEN", len(resp.Objects))
+						//depth_array = kinect_device.GetDepthArray()
+						//kinect_ball_pos.detectBall(rgb_frame)
+						last_kinect_ball_pos = kinect_ball_pos
+						kinect_ball_pos.X = float64(resp.Objects[index].X)
+						kinect_ball_pos.Y = float64(resp.Objects[index].Y)
+						ball_depth = float64(resp.Objects[index].Dist)
+						fmt.Println(coms.Data_ESP.Ball_status)
+						erro_linear = 0
+						switch state_Receive {
+						case "WAIT_BALL":
+							{
+								//Calculate ball trajectory
+								//change for the first only
+								ang_aux := getAngleRelativeToRobot(kinect_ball_pos.X, kinect_ball_pos.Y, ball_depth)
+								fmt.Println("Ball Angle", ang_aux)
+								x = math.Sin(ang_aux * math.Pi / 180)
+								x = x * ball_depth
+								y = math.Cos(ang_aux * math.Pi / 180)
+								y = y * ball_depth
+								fmt.Println("Manda", x, y)
+								trajectory_angle = -(math.Atan2(last_x-x, last_y-y) * 180 / math.Pi) + float64(db.Team[0].Orientation)
+								last_x = x
+								last_y = y
+								erro_angular = ang_aux
+								//fmt.Println(int(last_dist-ball_depth), int(ball_depth), int(last_dist))
+								if last_dist-ball_depth > 100 && ball_depth > 0 && last_dist > 0 {
+									state_Receive = "MOVE_INTERCEPTION"
+									//
+									//fmt.Println("Traj Angle", trajectory_angle, trajectory_angle-float64(db.Team[0].Angle), x, y, last_x, last_y)
+
+								} else {
+									last_kinect = false //kinect
+									last_dist = ball_depth
+									break
+
+								}
+							}
+						case "MOVE_INTERCEPTION":
+							{
+								erro_angular = float64(db.Team[0].Orientation) - trajectory_angle
+
+								erro_angular = getAngleRelativeToRobot(kinect_ball_pos.X, kinect_ball_pos.Y, ball_depth)
+
+								//erro_linear = ball_depth * math.Cos((erro_angular)*math.Pi/180)
+								erro_linear, side = obtain_lateral(last_kinect_ball_pos.X, kinect_ball_pos.X, last_dist, ball_depth)
+								last_dist = ball_depth
+								fmt.Println("Erro Angle , trajectory , MY.Orientation", int(erro_angular), int(trajectory_angle), db.Team[0].Orientation)
+								fmt.Println("----------------- erro_linear ,side", erro_linear, side)
+								if side == 0 {
+									dir = int(90.0 + db.Team[0].Orientation)
+									if dir < -180 {
+										dir = 180 - (dir + 180)
+									}
+								} else {
+									dir = int(-90.0 - db.Team[0].Orientation)
+									if dir > 180 {
+										dir = -180 + (dir - 180)
+									}
+									//erro_linear = -erro_linear
+								}
+								fmt.Println("-----------------dir depois ", dir)
+
+								//erro_angular = erro_angular
+								if (int(erro_angular) < 4 && int(erro_angular) > -4) || ball_depth < 2000 { // && int(erro_linear) == 0
+									//if ball_depth < 2000 {
+									state_Receive = "FINE_ADJUST"
+									//trajectory_angle = float64(db.Team[0].Orientation)
+
+								} else {
+									break
+								}
+							}
+
+						case "FINE_ADJUST":
+							{
+								erro_angular = getAngleRelativeToRobot(kinect_ball_pos.X, kinect_ball_pos.Y, ball_depth)
+								fmt.Println("angulo", erro_angular)
+								//erro_linear = ball_depth * math.Cos((erro_angular)*math.Pi/180)
+								erro_linear = ball_depth * math.Sin(erro_angular*180/math.Pi)
+								last_dist = ball_depth
+								erro_angular = 0
+								erro_linear *= 1.05
+								if erro_linear < 0 {
+									dir = 90
+								} else {
+									dir = -90.0
+									//erro_linear = -erro_linear
+								}
+								if coms.Data_ESP.Ball_status == 2 || coms.Data_ESP.Ball_status == 1 {
+									for {
+									}
+								}
+								break
+							}
+						}
+					}
+
+				} else {
+					fmt.Println("ENTREI NO ELSE ::::::::::::")
+					/*if state_Receive != "WAIT_BALL" {
+					erro_angular = float64(db.Ball.Angle - db.Team[0].Orientation)
+					erro_linear = float64(db.Ball.Dist) * math.Sin(float64(db.Ball.Angle)*180/math.Pi)
+					if erro_linear < 0 {
+						dir = int(90.0 + db.Team[0].Orientation)
+						if dir < -180 {
+							dir = 180 - (dir + 180)
+						}
+					} else {
+						dir = int(-90.0 - db.Team[0].Orientation)
+						if dir > 180 {
+							dir = -180 + (dir - 180)
+						}
+						//erro_linear = -erro_linear
+					}*/
+					//} else {
+					erro_angular = 0
+					erro_linear = 0
+					dir = 0
+					//}
+				}
+
+				old_time = current_time
+				current_time = time.Now()
+
+				fmt.Println("state_Receive", state_Receive)
+				fmt.Println("ball_pos.X", int(kinect_ball_pos.X), "ball_pos2.Y", int(kinect_ball_pos.Y), ball_depth)
+				fmt.Println("Erro Angular:", int(erro_angular))
+				fmt.Println("Erro linear:", int(erro_linear))
+
+				old_time = current_time
+				current_time = time.Now()
+
+				if erro_linear < 0 {
+					erro_linear = -erro_linear
+				}
+				rot = int(receive_orientation.Update(erro_angular, float64(current_time.Sub(old_time).Seconds())))
+
+				vel = int(receive_linear_mov.Update(erro_linear, float64(current_time.Sub(old_time).Seconds())))
+				if dir < 0 {
+					fmt.Println("DIR MENOR QUE 0 DIR:", dir)
+					dir += 360
+				}
+				if vel < 0 {
+					vel = -vel
+				}
+
+				fmt.Println("vel: ", (vel), "dir: ", (dir), "rot", rot)
+
+				coms.SendCommandToESP(coms.CMD_all, (vel), (rot), dir, 100, 100, 0)
+
+				//time.Sleep(10 * time.Millisecond)
+
+			}
+		}
+	}
+}

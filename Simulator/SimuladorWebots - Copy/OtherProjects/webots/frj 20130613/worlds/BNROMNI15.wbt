@@ -1,0 +1,1296 @@
+#VRML_SIM V6.0 utf8
+WorldInfo {
+  info [
+    "Description"
+    "Author: A. Fernando Ribeiro, Minho University"
+    "Adapted by: Yvan Bourquin - www.cyberbotics.com"
+    "Date: 12 Dec 2010"
+  ]
+  title "Botnroll_Omni"
+  basicTimeStep 8
+  runRealTime TRUE
+}
+Viewpoint {
+  orientation 0.0325936 -0.990605 -0.132814 3.76595
+  position 0.119939 0.378535 -0.722862
+}
+Background {
+  skyColor [
+    0.501961 1 1
+  ]
+}
+PointLight {
+  ambientIntensity 0.7
+  location 0 2.5 0
+}
+DEF Relva Solid {
+  translation 0.008 0 0
+  rotation 0 1 0 1.5708
+  children [
+    DEF relvinha Shape {
+      appearance Appearance {
+        texture ImageTexture {
+          url [
+            "textures/fundo.png"
+          ]
+        }
+      }
+      geometry Plane {
+        size 2.46 2.46
+      }
+    }
+  ]
+  boundingObject USE relvinha
+  locked TRUE
+}
+DEF WALL1 Solid {
+  translation 0 0.07 -0.93
+  children [
+    DEF WALL_LENGTH Shape {
+      appearance Appearance {
+        material Material {
+          diffuseColor 0.372549 0.372549 0.372549
+        }
+      }
+      geometry Box {
+        size 2.51 0.14 0.02
+      }
+    }
+  ]
+  boundingObject USE WALL_LENGTH
+  locked TRUE
+}
+DEF WALL2 Solid {
+  translation 1.245 0.07 0
+  rotation 0 1 0 1.5708
+  children [
+    DEF WALL_WIDTH Shape {
+      appearance Appearance {
+        material Material {
+          diffuseColor 0.372549 0.372549 0.372549
+        }
+      }
+      geometry Box {
+        size 1.84 0.14 0.02
+      }
+    }
+  ]
+  boundingObject USE WALL_WIDTH
+  locked TRUE
+}
+DEF WALL3 Solid {
+  translation 0 0.07 0.92
+  children [
+    USE WALL_LENGTH
+  ]
+  boundingObject USE WALL_LENGTH
+  locked TRUE
+}
+DEF WALL4 Solid {
+  translation -1.245 0.07 0
+  rotation 0 1 0 1.5708
+  children [
+    USE WALL_WIDTH
+  ]
+  boundingObject USE WALL_WIDTH
+  locked TRUE
+}
+DEF balizaBLUE Solid {
+  children [
+    DEF costas Solid {
+      translation -1.045 0.05 0
+      children [
+        DEF costasBLUE Shape {
+          appearance Appearance {
+            material Material {
+              diffuseColor 0 0 1
+            }
+          }
+          geometry Box {
+            size 0.017 0.1 0.635
+          }
+        }
+      ]
+      boundingObject USE costasBLUE
+    }
+    DEF esquerda Solid {
+      translation -0.985 0.05 -0.31
+      children [
+        DEF esquerdaBLUE Shape {
+          appearance Appearance {
+            material Material {
+              diffuseColor 0 0 1
+            }
+          }
+          geometry Box {
+            size 0.1 0.1 0.017
+          }
+        }
+      ]
+      boundingObject USE esquerdaBLUE
+    }
+    DEF direita Solid {
+      translation -0.985 0.05 0.31
+      children [
+        DEF direitaBLUE Shape {
+          appearance Appearance {
+            material Material {
+              diffuseColor 0 0 1
+            }
+          }
+          geometry Box {
+            size 0.1 0.1 0.017
+          }
+        }
+      ]
+      boundingObject USE direitaBLUE
+    }
+    DEF testa Solid {
+      translation -0.95 0.105 0
+      children [
+        DEF testaBLUE Shape {
+          appearance Appearance {
+            material Material {
+              diffuseColor 0 0 1
+            }
+          }
+          geometry Box {
+            size 0.027 0.012 0.635
+          }
+        }
+      ]
+      boundingObject USE testaBLUE
+    }
+  ]
+  name "balizaBLUE"
+  locked TRUE
+}
+DEF balizaYELLOW Solid {
+  children [
+    DEF costas Solid {
+      translation 1.045 0.05 0
+      children [
+        DEF costasYELLOW Shape {
+          appearance Appearance {
+            material Material {
+              diffuseColor 1 1 0
+            }
+          }
+          geometry Box {
+            size 0.017 0.1 0.635
+          }
+        }
+      ]
+      boundingObject USE costasYELLOW
+    }
+    DEF esquerda Solid {
+      translation 0.985 0.05 -0.31
+      children [
+        DEF esquerdaYELLOW Shape {
+          appearance Appearance {
+            material Material {
+              diffuseColor 1 1 0
+            }
+          }
+          geometry Box {
+            size 0.1 0.1 0.017
+          }
+        }
+      ]
+      boundingObject USE esquerdaYELLOW
+    }
+    DEF direita Solid {
+      translation 0.985 0.05 0.31
+      children [
+        DEF direitaYELLOW Shape {
+          appearance Appearance {
+            material Material {
+              diffuseColor 1 1 0
+            }
+          }
+          geometry Box {
+            size 0.1 0.1 0.017
+          }
+        }
+      ]
+      boundingObject USE direitaYELLOW
+    }
+    DEF testa Solid {
+      translation 0.95 0.105 0
+      children [
+        DEF testaYELLOW Shape {
+          appearance Appearance {
+            material Material {
+              diffuseColor 1 1 0
+            }
+          }
+          geometry Box {
+            size 0.027 0.012 0.635
+          }
+        }
+      ]
+      boundingObject USE testaYELLOW
+    }
+  ]
+  name "balizaYELLOW"
+  locked TRUE
+}
+DEF lampada Solid {
+  translation -0.176122 0.035 0.0613518
+  children [
+    Shape {
+      appearance Appearance {
+        material Material {
+          emissiveColor 1 1 1
+        }
+      }
+      geometry Sphere {
+        radius 0.01
+      }
+    }
+    PointLight {
+      ambientIntensity 1
+      attenuation 1 0 10
+      intensity 5
+      radius 120
+      castShadows TRUE
+    }
+  ]
+  name "BolaLuz"
+}
+DEF BOTNROLL_OMNI Robot {
+  translation -0.60651 0.0629125 -0.0509479
+  rotation 0.0980025 0.943329 -0.317058 -0.00559238
+  children [
+    DEF Roda1 Solid {
+      translation 0 -0.03 0
+      rotation 0 1 0 0.5236
+      children [
+        DEF WHEEL1 Servo {
+          translation 0 0 0.067
+          rotation 0 0 1 -3.9086
+          children [
+            DEF sr1 Servo {
+              translation 0 0.025 0.02
+              rotation 1 0 0 0
+              children [
+                DEF r1 Transform {
+                  rotation 0 0 1 1.5708
+                  children [
+                    DEF SMALL_WHEEL_SHAPE Shape {
+                      appearance Appearance {
+                        material Material {
+                          diffuseColor 1 0.752941 0.796078
+                        }
+                      }
+                      geometry Cylinder {
+                        height 0.015
+                        radius 0.008
+                      }
+                    }
+                  ]
+                }
+              ]
+              boundingObject USE r1
+              physics Physics {
+                density -1
+                mass 0.1
+              }
+              maxForce 0
+              position -1841.7
+            }
+            DEF sr2 Servo {
+              translation -0.0175 0.0175 0.02
+              rotation 0.707107 0.707107 0 0
+              children [
+                DEF r2 Transform {
+                  rotation 0 0 1 2.27
+                  children [
+                    USE SMALL_WHEEL_SHAPE
+                  ]
+                }
+              ]
+              boundingObject USE r2
+              physics Physics {
+                density -1
+                mass 0.1
+              }
+              maxForce 0
+              position -1103.78
+            }
+            DEF sr3 Servo {
+              translation 0 -0.025 0.02
+              rotation 1 0 0 0
+              children [
+                DEF r3 Transform {
+                  rotation 0 0 1 1.5708
+                  children [
+                    USE SMALL_WHEEL_SHAPE
+                  ]
+                }
+              ]
+              boundingObject USE r3
+              physics Physics {
+                density -1
+                mass 0.1
+              }
+              maxForce 0
+              position 1039.8
+            }
+            DEF sr4 Servo {
+              translation 0.0175 -0.0175 0.02
+              rotation 0.707107 0.707107 0 0
+              children [
+                DEF r4 Transform {
+                  rotation 0 0 1 2.27
+                  children [
+                    USE SMALL_WHEEL_SHAPE
+                  ]
+                }
+              ]
+              boundingObject USE r4
+              physics Physics {
+                density -1
+                mass 0.1
+              }
+              maxForce 0
+              position 928.764
+            }
+            DEF sr5 Servo {
+              translation -0.025 0 0.02
+              children [
+                DEF r5 Transform {
+                  children [
+                    USE SMALL_WHEEL_SHAPE
+                  ]
+                }
+              ]
+              boundingObject USE r5
+              physics Physics {
+                density -1
+                mass 0.1
+              }
+              maxForce 0
+              position -967.32
+            }
+            DEF sr6 Servo {
+              translation 0.025 0 0.02
+              children [
+                DEF r6 Transform {
+                  children [
+                    USE SMALL_WHEEL_SHAPE
+                  ]
+                }
+              ]
+              boundingObject USE r6
+              physics Physics {
+                density -1
+                mass 0.1
+              }
+              maxForce 0
+              position 1170
+            }
+            DEF sr7 Servo {
+              translation -0.0175 -0.0175 0.02
+              rotation -0.707107 0.707107 0 0
+              children [
+                DEF r7 Transform {
+                  rotation 0 0 1 0.76
+                  children [
+                    USE SMALL_WHEEL_SHAPE
+                  ]
+                }
+              ]
+              boundingObject USE r7
+              physics Physics {
+                density -1
+                mass 0.1
+              }
+              maxForce 0
+              position -1116.35
+            }
+            DEF sr8 Servo {
+              translation 0.0175 0.0175 0.02
+              rotation -0.707107 0.707107 0 0
+              children [
+                DEF r8 Transform {
+                  rotation 0 0 1 0.76
+                  children [
+                    USE SMALL_WHEEL_SHAPE
+                  ]
+                }
+              ]
+              boundingObject USE r8
+              physics Physics {
+                density -1
+                mass 0.1
+              }
+              maxForce 0
+              position 1761.43
+            }
+            DEF WHEEL_TRANS Transform {
+              translation 0 0 0.02
+              rotation 1 0 0 1.5708
+              children [
+                DEF WHEEL_SHAPE Shape {
+                  appearance Appearance {
+                    material Material {
+                      diffuseColor 0.678431 0.847059 0.901961
+                    }
+                  }
+                  geometry Cylinder {
+                    height 0.018
+                    radius 0.03
+                    subdivision 20
+                  }
+                }
+              ]
+            }
+          ]
+          name "wheel1"
+          boundingObject Transform {
+            translation 0 0 0.02
+            rotation 1 0 0 1.5708
+            children [
+              DEF wheel1 Shape {
+                appearance Appearance {
+                  material Material {
+                    emissiveColor 0 1 0
+                    transparency 0.13
+                  }
+                }
+                geometry Cylinder {
+                  height 0.018
+                  radius 0.03
+                }
+              }
+            ]
+          }
+          physics Physics {
+          }
+          maxVelocity 15
+          position -10.7424
+        }
+      ]
+      boundingObject DEF DUMMY Sphere {
+        radius 0.01
+      }
+      physics Physics {
+      }
+    }
+    DEF Roda2 Solid {
+      translation 0 -0.03 0
+      rotation 0 1 0 -1.5708
+      children [
+        DEF WHEEL2 Servo {
+          translation 0 0 0.067
+          rotation 0 0 1 -63.4859
+          children [
+            USE sr1
+            USE sr2
+            USE sr3
+            USE sr4
+            USE sr5
+            USE sr6
+            USE sr7
+            USE sr8
+            USE WHEEL_TRANS
+          ]
+          name "wheel2"
+          boundingObject Transform {
+            translation 0 0 0.02
+            rotation 1 0 0 1.5708
+            children [
+              DEF wheel1 Shape {
+                appearance Appearance {
+                  material Material {
+                    emissiveColor 0 1 0
+                    transparency 0.13
+                  }
+                }
+                geometry Cylinder {
+                  height 0.02
+                  radius 0.03
+                }
+              }
+            ]
+          }
+          physics Physics {
+          }
+          maxVelocity 15
+          position 15.1474
+        }
+      ]
+      boundingObject USE DUMMY
+      physics Physics {
+      }
+    }
+    DEF Roda3 Solid {
+      translation 0 -0.03 0
+      rotation 0 1 0 2.618
+      children [
+        DEF WHEEL3 Servo {
+          translation 0 0 0.067
+          rotation 0 0 1 -111.993
+          children [
+            USE sr1
+            USE sr2
+            USE sr3
+            USE sr4
+            USE sr5
+            USE sr6
+            USE sr7
+            USE sr8
+            USE WHEEL_TRANS
+          ]
+          name "wheel3"
+          boundingObject Transform {
+            translation 0 0 0.02
+            rotation 1 0 0 1.5708
+            children [
+              DEF wheel1 Shape {
+                appearance Appearance {
+                  material Material {
+                    emissiveColor 0 1 0
+                    transparency 0.13
+                  }
+                }
+                geometry Cylinder {
+                  height 0.02
+                  radius 0.03
+                }
+              }
+            ]
+          }
+          physics Physics {
+          }
+          maxVelocity 15
+          position 74.6209
+        }
+      ]
+      boundingObject USE DUMMY
+      physics Physics {
+      }
+    }
+    DEF placa0 Solid {
+      translation 0 -0.052 0
+      children [
+        DEF prancha_chuto Solid {
+          translation 0.08 0.025 0
+          children [
+            Shape {
+              appearance Appearance {
+                material Material {
+                  emissiveColor 0.501961 0.501961 0.501961
+                }
+                texture ImageTexture {
+                  url [
+                    "textures/logo_bnr.png"
+                  ]
+                }
+              }
+              geometry Box {
+                size 0.003 0.05 0.13
+              }
+            }
+          ]
+        }
+        DEF placa0 Shape {
+          appearance Appearance {
+            material Material {
+              diffuseColor 0.501961 0.501961 0.501961
+            }
+          }
+          geometry Cylinder {
+            height 0.001
+            radius 0.08
+          }
+        }
+      ]
+      boundingObject USE placa0
+    }
+    DEF placa1 Solid {
+      children [
+        DEF coluna1 Transform {
+          translation 0.057 0.023 -0.045
+          children [
+            Shape {
+              appearance Appearance {
+                material Material {
+                  diffuseColor 0.952941 0.85098 0.427451
+                }
+              }
+              geometry Cylinder {
+                height 0.16
+                radius 0.002
+              }
+            }
+          ]
+        }
+        DEF coluna2 Transform {
+          translation 0.026 0.023 0.069
+          children [
+            Shape {
+              appearance Appearance {
+                material Material {
+                  diffuseColor 0.952941 0.85098 0.427451
+                }
+              }
+              geometry Cylinder {
+                height 0.16
+                radius 0.002
+              }
+            }
+          ]
+        }
+        DEF coluna3 Transform {
+          translation -0.052 0.023 -0.021
+          children [
+            Shape {
+              appearance Appearance {
+                material Material {
+                  diffuseColor 0.952941 0.85098 0.427451
+                }
+              }
+              geometry Cylinder {
+                height 0.16
+                radius 0.002
+              }
+            }
+          ]
+        }
+        DEF placa1_extrusao Solid {
+          translation 0 0.001 0
+          children [
+            Shape {
+              appearance Appearance {
+                material Material {
+                  ambientIntensity 0.1
+                  diffuseColor 0.501961 0.501961 0.501961
+                  emissiveColor 0.501961 0.501961 0.501961
+                  shininess 0.1
+                  specularColor 0.501961 0.501961 0.501961
+                }
+              }
+              geometry Extrusion {
+                crossSection [
+                  0.0804 0.0675
+                  0.0525 0.0909
+                  0.0182 0.1034
+                  -0.0182 0.1034
+                  -0.0525 0.0909
+                  -0.0804 0.0675
+                  -0.0987 0.0359
+                  -0.105 0
+                  -0.0987 -0.0359
+                  -0.0804 -0.0675
+                  -0.0525 -0.0909
+                  -0.0182 -0.1034
+                  0.0182 -0.1034
+                  0.0525 -0.0909
+                  0.0804 -0.0675
+                  0.0804 0.0675
+                ]
+                spine [
+                  0 0 0
+                  0 0.001 0
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+    DEF placa2 Solid {
+      translation 0 0.045 0
+      children [
+        USE placa1_extrusao
+      ]
+    }
+    DEF placa3 Solid {
+      translation 0 0.1 0
+      children [
+        USE placa1_extrusao
+        DEF autocolante Transform {
+          translation -0.041 0.001 0.029
+          children [
+            Shape {
+              appearance Appearance {
+                texture ImageTexture {
+                  url [
+                    "textures/logo_bnr.png"
+                  ]
+                }
+                textureTransform TextureTransform {
+                  rotation 1.5708
+                }
+              }
+              geometry Box {
+                size 0.05 0.0001 0.085
+              }
+            }
+          ]
+        }
+      ]
+    }
+    DEF SonarFrente DistanceSensor {
+      translation 0.07 0.07 0
+      children [
+        DEF Sonar Transform {
+          children [
+            DEF fundo Transform {
+              translation -0.011 0 0
+              children [
+                Shape {
+                  appearance Appearance {
+                    material Material {
+                      diffuseColor 0 1 0
+                    }
+                  }
+                  geometry Box {
+                    size 0.001 0.025 0.05
+                  }
+                }
+              ]
+            }
+            DEF direita Transform {
+              translation -0.006 0 0.01
+              rotation 0 0 1 1.5708
+              children [
+                Shape {
+                  appearance Appearance {
+                    material Material {
+                      diffuseColor 1 1 1
+                    }
+                  }
+                  geometry Cylinder {
+                    height 0.01
+                    radius 0.008
+                  }
+                }
+              ]
+            }
+            DEF esquerda Transform {
+              translation -0.006 0 -0.01
+              rotation 0 0 1 1.5708
+              children [
+                Shape {
+                  appearance Appearance {
+                    material Material {
+                      diffuseColor 1 1 1
+                    }
+                  }
+                  geometry Cylinder {
+                    height 0.01
+                    radius 0.008
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+      name "SonarFrente"
+      lookupTable [
+        0 0 0
+        3 3000 0
+      ]
+      type "sonar"
+    }
+    DEF SonarTras DistanceSensor {
+      translation -0.07 0.07 0
+      rotation 0 1 0 3.14159
+      children [
+        USE Sonar
+      ]
+      name "SonarTras"
+      lookupTable [
+        0 0 0
+        3 3000 0
+      ]
+      type "sonar"
+    }
+    DEF SonarEsquerda DistanceSensor {
+      translation 0 0.07 -0.07
+      rotation 0 1 0 1.57079
+      children [
+        USE Sonar
+      ]
+      name "SonarEsquerda"
+      lookupTable [
+        0 0 0
+        3 3000 0
+      ]
+      type "sonar"
+    }
+    DEF SonarDireita DistanceSensor {
+      translation 0 0.07 0.07
+      rotation 0 1 0 -1.57079
+      children [
+        USE Sonar
+      ]
+      name "SonarDireita"
+      lookupTable [
+        0 0 0
+        3 3000 0
+      ]
+      type "sonar"
+    }
+    DEF Bussola Compass {
+      translation 0.04 0.1555 0.055
+      children [
+        DEF quadradoVerm Transform {
+          children [
+            Shape {
+              appearance Appearance {
+                material Material {
+                  diffuseColor 1 0 0
+                }
+              }
+              geometry Box {
+                size 0.016 0.001 0.016
+              }
+            }
+          ]
+        }
+        DEF quadradoPreto Transform {
+          translation 0 0.001 0
+          children [
+            Shape {
+              appearance Appearance {
+                material Material {
+                  diffuseColor 0 0 0
+                }
+              }
+              geometry Box {
+                size 0.009 0.001 0.009
+              }
+            }
+          ]
+        }
+        DEF cilindro Transform {
+          translation 0 -0.0275 0
+          children [
+            Shape {
+              geometry Cylinder {
+                height 0.055
+                radius 0.008
+              }
+            }
+          ]
+        }
+      ]
+      name "Bussola"
+    }
+    DEF gps GPS {
+      translation 0 0.101 0
+      children [
+        Shape {
+          appearance Appearance {
+            material Material {
+              diffuseColor 0 0 1
+            }
+          }
+          geometry Box {
+            size 0.01 0.001 0.01
+          }
+        }
+      ]
+    }
+    DEF Vermelho LED {
+      translation -0.036 0.102 -0.058
+      children [
+        DEF LED Group {
+          children [
+            PointLight {
+              color 1 0 0
+              intensity 0
+              location 0 0.03 0
+            }
+            Shape {
+              appearance Appearance {
+                material Material {
+                  emissiveColor 1 0 0
+                }
+              }
+              geometry Sphere {
+                radius 0.003
+              }
+            }
+          ]
+        }
+      ]
+      name "led0"
+    }
+    DEF Amarelo LED {
+      translation -0.048 0.102 -0.065
+      children [
+        DEF LED Group {
+          children [
+            PointLight {
+              color 1 1 0
+              intensity 0
+              location 0 0.03 0
+            }
+            Shape {
+              appearance Appearance {
+                material Material {
+                  emissiveColor 1 1 0
+                }
+              }
+              geometry Sphere {
+                radius 0.003
+              }
+            }
+          ]
+        }
+      ]
+      name "led1"
+      color [
+        1 1 0
+      ]
+    }
+    DEF Verde LED {
+      translation -0.048 0.102 -0.052
+      children [
+        DEF LED Group {
+          children [
+            PointLight {
+              color 0 1 0
+              intensity 0
+              location 0 0.03 0
+            }
+            Shape {
+              appearance Appearance {
+                material Material {
+                  emissiveColor 0 1 0
+                }
+              }
+              geometry Sphere {
+                radius 0.003
+              }
+            }
+          ]
+        }
+      ]
+      name "led2"
+      color [
+        0 1 0
+      ]
+    }
+    DEF LuzC DistanceSensor {
+      translation 0 -0.053 0
+      rotation 0 0 1 -1.5708
+      children [
+        DEF Luz Shape {
+          appearance Appearance {
+            material Material {
+              ambientIntensity 0.4
+              diffuseColor 1 1 1
+              emissiveColor 1 1 1
+            }
+          }
+          geometry Box {
+            size 0.001 0.01 0.01
+          }
+        }
+      ]
+      name "LuzC"
+      lookupTable [
+        0 0 0
+        0.05 1000 0
+      ]
+    }
+    DEF LuzF DistanceSensor {
+      translation 0.025 -0.053 0
+      rotation 0 0 1 -1.5708
+      children [
+        USE Luz
+      ]
+      name "LuzF"
+      lookupTable [
+        0 0 0
+        0.05 1000 0
+      ]
+    }
+    DEF LuzT DistanceSensor {
+      translation -0.025 -0.053 0
+      rotation 0 0 1 -1.5708
+      children [
+        USE Luz
+      ]
+      name "LuzT"
+      lookupTable [
+        0 0 0
+        0.05 1000 0
+      ]
+    }
+    DEF LuzE DistanceSensor {
+      translation 0 -0.053 -0.025
+      rotation 0 0 1 -1.5708
+      children [
+        USE Luz
+      ]
+      name "LuzE"
+      lookupTable [
+        0 0 0
+        0.05 1000 0
+      ]
+    }
+    DEF LuzD DistanceSensor {
+      translation 0 -0.053 0.025
+      rotation 0 0 1 -1.5708
+      children [
+        USE Luz
+      ]
+      name "LuzD"
+      lookupTable [
+        0 0 0
+        0.05 1000 0
+      ]
+    }
+    DEF SBola1 LightSensor {
+      translation 0.1034 0 -0.0182
+      rotation 0 1 0 0.174533
+      name "SBola1"
+      lookupTable [
+        0 0 0
+        5 400 0
+      ]
+      occlusion TRUE
+    }
+    DEF SBola2 LightSensor {
+      translation 0.0909 0 -0.0525
+      rotation 0 1 0 0.5236
+      name "SBola2"
+      lookupTable [
+        0 0 0
+        5 400 0
+      ]
+      occlusion TRUE
+    }
+    DEF SBola3 LightSensor {
+      translation 0.0675 0 -0.0804
+      rotation 0 1 0 0.87266
+      name "SBola3"
+      lookupTable [
+        0 0 0
+        5 400 0
+      ]
+      occlusion TRUE
+    }
+    DEF SBola4 LightSensor {
+      translation 0.0359 0 -0.0987
+      rotation 0 1 0 1.22173
+      name "SBola4"
+      lookupTable [
+        0 0 0
+        5 400 0
+      ]
+      occlusion TRUE
+    }
+    DEF SBola5 LightSensor {
+      translation 0 0 -0.105
+      rotation 0 1 0 1.5708
+      name "SBola5"
+      lookupTable [
+        0 0 0
+        5 400 0
+      ]
+      occlusion TRUE
+    }
+    DEF SBola6 LightSensor {
+      translation -0.0359 0 -0.0987
+      rotation 0 1 0 1.91986
+      name "SBola6"
+      lookupTable [
+        0 0 0
+        5 400 0
+      ]
+      occlusion TRUE
+    }
+    DEF SBola7 LightSensor {
+      translation -0.0675 0 -0.0804
+      rotation 0 1 0 2.26893
+      name "SBola7"
+      lookupTable [
+        0 0 0
+        5 400 0
+      ]
+      occlusion TRUE
+    }
+    DEF SBola8 LightSensor {
+      translation -0.0909 0 -0.0525
+      rotation 0 1 0 2.618
+      name "SBola8"
+      lookupTable [
+        0 0 0
+        5 400 0
+      ]
+      occlusion TRUE
+    }
+    DEF SBola9 LightSensor {
+      translation -0.1034 0 -0.0182
+      rotation 0 1 0 2.9671
+      name "SBola9"
+      lookupTable [
+        0 0 0
+        5 400 0
+      ]
+      occlusion TRUE
+    }
+    DEF SBola10 LightSensor {
+      translation -0.1034 0 0.0182
+      rotation 0 1 0 3.31613
+      name "SBola10"
+      lookupTable [
+        0 0 0
+        5 400 0
+      ]
+      occlusion TRUE
+    }
+    DEF SBola11 LightSensor {
+      translation -0.0909 0 0.0525
+      rotation 0 1 0 3.6652
+      name "SBola11"
+      lookupTable [
+        0 0 0
+        5 400 0
+      ]
+      occlusion TRUE
+    }
+    DEF SBola12 LightSensor {
+      translation -0.0675 0 0.0804
+      rotation 0 1 0 4.01426
+      name "SBola12"
+      lookupTable [
+        0 0 0
+        5 400 0
+      ]
+      occlusion TRUE
+    }
+    DEF SBola13 LightSensor {
+      translation -0.0359 0 0.0987
+      rotation 0 1 0 4.36332
+      name "SBola13"
+      lookupTable [
+        0 0 0
+        5 400 0
+      ]
+      occlusion TRUE
+    }
+    DEF SBola14 LightSensor {
+      translation 0 0 0.105
+      rotation 0 1 0 4.7129
+      name "SBola14"
+      lookupTable [
+        0 0 0
+        5 400 0
+      ]
+      occlusion TRUE
+    }
+    DEF SBola15 LightSensor {
+      translation 0.0359 0 0.0987
+      rotation 0 1 0 5.06145
+      name "SBola15"
+      lookupTable [
+        0 0 0
+        5 400 0
+      ]
+      occlusion TRUE
+    }
+    DEF SBola16 LightSensor {
+      translation 0.0675 0 0.0804
+      rotation 0 1 0 5.41052
+      name "SBola16"
+      lookupTable [
+        0 0 0
+        5 400 0
+      ]
+      occlusion TRUE
+    }
+    DEF SBola17 LightSensor {
+      translation 0.0909 0 0.0525
+      rotation 0 1 0 5.75959
+      name "SBola17"
+      lookupTable [
+        0 0 0
+        5 400 0
+      ]
+      occlusion TRUE
+    }
+    DEF SBola18 LightSensor {
+      translation 0.1034 0 0.0182
+      rotation 0 1 0 6.10865
+      name "SBola18"
+      lookupTable [
+        0 0 0
+        5 400 0
+      ]
+      occlusion TRUE
+    }
+    DEF kicker Servo {
+      rotation 1.91195e-010 1 -2.06704e-010 1.5708
+      children [
+        Transform {
+          translation 0 0 0.07
+          rotation 1 0 0 1.5708
+          children [
+            DEF kicker Shape {
+              appearance Appearance {
+                material Material {
+                  diffuseColor 1 0 0
+                }
+              }
+              geometry DEF kicker Cylinder {
+                height 0.03
+                radius 0.005
+              }
+            }
+          ]
+        }
+      ]
+      name "kicker"
+      boundingObject USE kicker
+      locked TRUE
+      type "linear"
+      maxVelocity 100
+      maxForce 100
+      controlP 1
+      acceleration 100
+      maxPosition 0.05
+      maxStop 0.005
+    }
+    DEF SToque TouchSensor {
+      translation 0 -0.051 0
+      children [
+        USE prancha_chuto
+      ]
+      name "SToque"
+      boundingObject Transform {
+        translation 0.08 0.025 0
+        children [
+          Box {
+            size 0.003 0.05 0.13
+          }
+        ]
+      }
+      lookupTable [
+        0 0 0
+        0.01 1 0
+      ]
+    }
+  ]
+  boundingObject Transform {
+    translation 0 0.021 0
+    children [
+      Cylinder {
+        height 0.16
+        radius 0.116
+      }
+    ]
+  }
+  physics Physics {
+  }
+  controller "botnroll_omni"
+}

@@ -1,0 +1,27 @@
+var main_8py =
+[
+    [ "changeMenu", "main_8py.html#ae1aad9e1fd94b800315527daefe4a273", null ],
+    [ "Control", "main_8py.html#a325cc702e67c2a06467dde86a21bcb62", null ],
+    [ "Exit", "main_8py.html#a3045ea7c0954c8b4c7f26cb397bf2751", null ],
+    [ "Game", "main_8py.html#a335a73e0fba2f4cf13fb9af83da60a28", null ],
+    [ "mainGui", "main_8py.html#aea57f25590f654e8a77083a09e834aa4", null ],
+    [ "Skills", "main_8py.html#ae0492cec70412395706473cd4704fdc7", null ],
+    [ "buttons", "main_8py.html#a99fa26a55209c0b24e5937a95c192148", null ],
+    [ "end", "main_8py.html#ada24c0f5d143f130aceaf05ae35895fd", null ],
+    [ "flags", "main_8py.html#add7c74c4e754bec462da33f9910cc1f4", null ],
+    [ "initTime", "main_8py.html#a1eb846a19d2fb4a2dd52b06531da303d", null ],
+    [ "IPS", "main_8py.html#a289e4044e5b783704fccca758f093d85", null ],
+    [ "joystickPress", "main_8py.html#a345d955f280253dc3db7db13dc904ea6", null ],
+    [ "joysticks", "main_8py.html#a5915b64101bf1be9ee80cf668924390f", null ],
+    [ "keyboardPress", "main_8py.html#a394a8da260d7f7f4b4cc773c0998492c", null ],
+    [ "kick", "main_8py.html#a0d91e5946d62be527f1554faabdfe4c0", null ],
+    [ "list1", "main_8py.html#ae7d75e2a63a7d5232e278ceab3e5c5ce", null ],
+    [ "loopTime", "main_8py.html#a79977f30964906ba8f47e199d7142cc0", null ],
+    [ "MainMenus", "main_8py.html#abe8cc3820292d1d7def6ddfb03f03eb3", null ],
+    [ "MenuSelected", "main_8py.html#ae1668670ed49b983c9b141035415d310", null ],
+    [ "mouse", "main_8py.html#a58bb28047117747cd6b49e50bc70618b", null ],
+    [ "newInfo", "main_8py.html#a5f7a91c32de9bb913cfd6c74f4a3f0fd", null ],
+    [ "recebe", "main_8py.html#acbd512fe0753ea90f7ef1a517ee2a3fe", null ],
+    [ "Robots", "main_8py.html#a15e6279b7ba32e12c311a9f4c5caa3dd", null ],
+    [ "screen", "main_8py.html#a3492c3460d3b1a7a0bd088f90f8e0c79", null ]
+];

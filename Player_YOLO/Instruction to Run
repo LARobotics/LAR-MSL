@@ -1,0 +1,11 @@
+====Run Calibration ====
+make calib
+
+=====Run Server ==== Just once, if server dont interrupted.
+make server
+
+====Run Go ====
+make debug
+
+====Run All ====
+make start

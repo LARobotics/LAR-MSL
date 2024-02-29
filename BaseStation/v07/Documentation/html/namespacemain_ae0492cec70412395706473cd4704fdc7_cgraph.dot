@@ -1,0 +1,15 @@
+digraph "main.Skills"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  rankdir="LR";
+  Node1 [label="main.Skills",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [color="steelblue1",style="solid"];
+  Node2 [label="guiFuncs.Field",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$namespacegui_funcs.html#a970dd29c3662c6633d01c67f2eca8edd",tooltip="DRAW FIELD ############."];
+  Node1 -> Node3 [color="steelblue1",style="solid"];
+  Node3 [label="guiFuncs.RefBox",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$namespacegui_funcs.html#a9755c31c90d91e836992655009d2a243",tooltip=" "];
+  Node1 -> Node4 [color="steelblue1",style="solid"];
+  Node4 [label="guiFuncs.RobotsGUI",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$namespacegui_funcs.html#aca516ee8fc1fe8d0709bf4eef1c81c87",tooltip="DRAW ROBOTS AND INFO ############."];
+}
