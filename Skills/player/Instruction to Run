@@ -1,0 +1,9 @@
+=====Run Server ==== Just once, if server dont interrupted.
+cd python
+python3 server.py
+
+====Run Go ====
+make debug_wtBS
+
+
+Já tens o código no Git.

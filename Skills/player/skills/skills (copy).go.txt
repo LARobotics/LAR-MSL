@@ -1,0 +1,1150 @@
+package skills
+
+/*
+#include <stdlib.h>
+#include <stdio.h>
+u_int16_t get_byte_16_2(void *buf, int offset)
+{
+	return *((u_int16_t *)buf + offset);
+}
+*/
+import "C"
+
+import (
+	"fmt"
+	"image"
+	"math"
+	"os"
+	coms "player/communication"
+	"player/freenect"
+	"strconv"
+	"strings"
+	"time"
+	"unsafe"
+
+	"gocv.io/x/gocv"
+)
+
+// Minimum area to detect the ball
+const MinimumArea = 100
+
+// Angle of view of camera
+const horizontal_cam = 62.5
+const vertical_cam = 48.6
+const no_vision_cam = 58.75
+const vertical_cam_angle = 90
+
+// Angle of view of depth camera
+const horizontal_depth_cam = 58.5
+const vertical_depth_cam = 46.6
+const no_vision_depth_cam = 60.75
+
+const img_width = 640
+const img_height = 480
+
+// Minium hsv values for ball filter
+const m_hue = 7.0 //25.0
+const m_sat = 100.0
+const m_value = 0.0
+
+// Maxium hsv values for ball filter
+const M_hue = 13.5 //65.0
+const M_sat = 255.0
+const M_value = 255.0
+
+type Pid struct {
+	kP, kI, kD  float64
+	dt          float64
+	lastError   float64
+	integral    float64
+	outputLimit float64
+}
+
+type Atractor struct {
+	Katracao     float64
+	Kintensidade float64
+	outputLimit  float64
+}
+
+type PID_gains struct {
+	Kp float64
+	Ki float64
+	Kd float64
+}
+
+type position struct {
+	Y float64
+	X float64
+}
+
+type skill_ interface {
+	orientation()
+	remoteControl()
+}
+
+// var freenect_device *freenect.FreenectDevice
+var led_sleep_time time.Duration
+var image_quality = 100
+var freenect_device_present = false
+
+var fns []func(args_ [7]int, quit chan int)
+
+// var fns_chan [8]chan bool
+var fns_chan = make([]chan int, 10)
+
+var window3 = gocv.NewWindow("dilated")
+var ball_flag bool
+var Fns_args = make(chan [7]int, 10)
+
+func getCommandParameters(package_ string, args_ *[7]int) int {
+
+	splittedString := strings.Split(package_, ", ")
+	splittedString1 := strings.Split(splittedString[0], "[")
+	//fmt.Println("\npackage_    ", package_)
+	//fmt.Println("\nsplittedString    ", splittedString)
+	idx_cmd, _ := strconv.Atoi(splittedString1[1])
+	args_[0], _ = strconv.Atoi(splittedString[1])
+	args_[1], _ = strconv.Atoi(splittedString[2])
+	args_[2], _ = strconv.Atoi(splittedString[3])
+	args_[3], _ = strconv.Atoi(splittedString[4])
+	args_[4], _ = strconv.Atoi(splittedString[5])
+	args_[5], _ = strconv.Atoi(splittedString[6])
+	//fmt.Println(splittedString1[1], '\t', splittedString[1])
+	/*fmt.Printf("%s,%s,%s,%s,%s\n", splittedString[1], splittedString[2],
+		splittedString[3], splittedString[4], splittedString[5])
+	fmt.Printf("%d,%d,%d\n", args_[0], args_[1], args_[2])*/
+	return idx_cmd
+}
+
+func Skills(mode int) {
+	fmt.Println("Skills")
+	//BS_channel := make(chan string)
+	//var fns_args chan [7]int
+	//	var command_index int
+
+	if mode == 0 {
+		chan_quit := make(chan int)
+		var args = [7]int{-1, -1, -1, -1, -1, -1, -1}
+		fmt.Println("mode 0 in")
+		skMove(args, chan_quit)
+		//skAtack(args, chan_quit)
+		//skAtack2()
+		//skRemoteControl()
+		fmt.Println("mode 0 out")
+	} else if mode == 1 {
+		fns = append(fns, skStop)
+		fns = append(fns, skMove)
+		fns = append(fns, skAtack)
+		fns = append(fns, skKick)
+		fns = append(fns, skReceive)
+		fns = append(fns, skCover)
+		fns = append(fns, skDefend)
+		fns = append(fns, skRemoteControl)
+
+		chan_quit := make(chan int)
+
+		var command string
+		var args [7]int
+		var last_state int
+
+		first_time_running := true
+		for {
+			//fmt.Print(coms.New_BS_command)
+
+			if coms.New_BS_command {
+				coms.New_BS_command = false
+				coms.GetBS_Command(&command)
+				//fmt.Print("BaseStation_cmd")
+				//fmt.Println(command)
+				command_index := getCommandParameters(command, &args)
+				fmt.Println(command_index, last_state)
+
+				if command_index < 8 {
+
+					if last_state != command_index {
+						if !first_time_running {
+							chan_quit <- 0
+						}
+						first_time_running = false
+						go fns[command_index](args, chan_quit)
+					} else {
+						Fns_args <- args
+
+						//fns_chan[command_index] <- false
+						//fmt.Println("skill2345")
+					}
+					last_state = command_index
+				} else {
+					fmt.Println("skill command value out of range")
+				}
+
+			}
+		}
+	}
+}
+
+// NewPid creates a new PID controller with the given constants and dt
+func NewPid(kP, kI, kD, dt, outputLimit float64) *Pid {
+	return &Pid{
+		kP:          kP,
+		kI:          kI,
+		kD:          kD,
+		dt:          dt,
+		outputLimit: outputLimit,
+	}
+}
+
+// NewPid creates a new PID controller with the given constants and dt
+func NewAtractor(Katracao, Kintensidade, outputLimit float64) *Atractor {
+	return &Atractor{
+		Katracao:     Katracao,
+		Kintensidade: Kintensidade,
+		outputLimit:  outputLimit,
+	}
+}
+
+func (a *Atractor) Update(erro float64) float64 {
+	output := a.Katracao * math.Exp(erro*a.Kintensidade)
+
+	if output > a.outputLimit {
+		output = a.outputLimit
+	}
+
+	return output
+}
+
+// Update computes the new control output based on the current error and elapsed time
+func (p *Pid) Update(erro float64, dt float64) float64 {
+	// Proportional term
+	pTerm := p.kP * erro
+	//fmt.Println("PID_start")
+	// Integral term
+	p.integral += erro * dt
+	iTerm := p.kI * p.integral
+
+	// Derivative term
+	dTerm := p.kD * (erro - p.lastError) / dt
+	p.lastError = erro
+
+	// Compute the output
+	output := pTerm + iTerm + dTerm
+
+	// Limit the output if necessary
+	if output > p.outputLimit {
+		output = p.outputLimit
+	} else if output < -p.outputLimit {
+		output = -p.outputLimit
+	}
+	//fmt.Println("PID_end")
+
+	return output
+}
+
+func skStop(args_ [7]int, quit chan int) {
+	fmt.Println("Stop")
+	for {
+		select {
+		case <-quit:
+			fmt.Println("quit")
+			return
+		default:
+			fmt.Println("Stop....")
+			coms.SendCommandToESP(coms.CMD_all, 0, 0, 0, 0, 0, 0)
+		}
+	}
+}
+
+func skCover(args_ [7]int, quit chan int) {
+	for {
+		select {
+		case <-quit:
+			fmt.Println("quit")
+			return
+		default:
+			fmt.Println("COVER")
+		}
+	}
+}
+func skDefend(args_ [7]int, quit chan int) {
+	for {
+		select {
+		case <-quit:
+			fmt.Println("quit")
+			return
+		default:
+			fmt.Println("Defend")
+		}
+	}
+}
+
+
+func skMove(args_ [7]int, quit chan int) {
+	fmt.Println("skMove")
+	X_dest, Y_dest := 571.0, 0.0
+	speed_atractor := NewAtractor(0.19, 0.03, 100)
+	//direction_atractor := NewAtractor(0.01, 0.13, 100)
+	var robot coms.Robot_st
+	var robot coms.Robot_st			
+	arg := args_
+	vare := arg[0]
+	var direcao float64 
+	for {
+		select {
+		case <-quit:
+			fmt.Println("quit")
+			return
+		default:
+			for len(Fns_args) > 0 && vare != -1 {
+				arg = <-Fns_args
+			}
+			coms.GetBallPosition(&ball)
+			coms.GetRobot(0, &robot)
+			/*fmt.Print(" X  ")
+			fmt.Print(robot.Coords.X)
+			fmt.Print("    Y  ")
+			fmt.Print(robot.Coords.Y)
+*/
+			//calculo do deslocamento angular em relacao a bola
+			ang := math.Atan2((float64(Y_dest) - float64(robot.Coords.Y)), (float64(X_dest) - float64(robot.Coords.X)))
+			ang = (ang * 180) / math.Pi
+			
+			
+			dir:=0
+			if ang < 0  {
+				dir = 360+int(ang)	
+			}else{
+				dir = int(ang)
+			}
+			if dir < -180{ 
+				dir=(360-dir)
+			}else{
+				dir=(dir)
+			}
+			fmt.Print("    dir  ")
+		 	fmt.Print(dir)
+			 
+			ang_obs := math.Atan2(float64(robot.Coords.Y)-(float64(ball.Coords.Y)), float64(robot.Coords.X)-(float64(ball.Coords.Y)))
+			ang_obs = (ang_obs * 180) / math.Pi
+			
+			aux_obstacle:=direcao-float64(dir)
+			fmt.Print("     aux_obstacle  ")
+			fmt.Print(int(aux_obstacle))
+			
+			//direcao=120*math.Sin(aux_target/(18*math.Pi))
+			
+			direcao=float64(dir)-(0.4*aux_obstacle*math.Exp(-((math.Pow(aux_obstacle,2)/2*math.Pow(180,2)))))
+			fmt.Print("     direcao  ")
+			fmt.Print(int((0.4*aux_obstacle*math.Exp(-((math.Pow(aux_obstacle,2)/2*math.Pow(360,2)))))))
+			
+			//calculo do deslocamento ate a bola
+
+			vel_a := (X_dest - robot.Coords.X) * (X_dest - robot.Coords.X)
+			vel_b := (Y_dest - robot.Coords.Y) * (Y_dest - robot.Coords.Y)
+ 			  
+ 
+ 			displacement := math.Sqrt(vel_a+vel_b)
+			vel := speed_atractor.Update((displacement))
+
+ /*
+			//calculo do deslocamento ate a bola
+			slope := 1.0
+			dir_erro := math.Atan2(-600,600)
+			aux_x := (float64(robot.Orientation) - dir_erro/2*90)
+			direction := slope * (float64(robot.Orientation) - dir_erro) * math.Exp(aux_x)
+			 
+			//direction = direction_atractor.Update(erro)
+*/
+			fmt.Print("    dir  ")
+		 	fmt.Print(dir)
+			/* 
+			fmt.Print("     ori  ")
+			fmt.Print(int(robot.Orientation)-dir)
+			 
+			/*fmt.Print("     dir-ori  ")
+			if robot.Orientation < -180{ 
+				fmt.Print(dir+robot.Orientation-360)
+			}else{
+				fmt.Print(dir-robot.Orientation)
+			}*/
+			 
+			
+			fmt.Print("     vel  ")
+			fmt.Print(int(vel))
+			/*fmt.Print("     d  ")
+			fmt.Println(int(displacement))
+			/*fmt.Print("     ang  ")
+			fmt.Print(int(ang))
+			fmt.Print("     direction  ")
+			fmt.Println(int(direction))*/
+ 			time.Sleep(1*time.Second)
+ 			fmt.Println()
+		}
+	}
+}
+
+
+// AttractorRepeller represents an attractor or repeller in the environment
+type AttractorRepeller struct {
+	Pos       [2]float64 // position of the attractor/repeller
+	Strength  float64    // strength of the attractor/repeller
+	Attractor bool       // whether the attractor/repeller is an attractor or a repeller
+}
+
+// NetForce calculates the net force acting on the robot
+func NetForce(robotPos [2]float64, attractors []AttractorRepeller) [2]float64 {
+	var netForce [2]float64
+
+	for _, attr := range attractors {
+		// calculate the direction vector from the robot to the attractor/repeller
+		direction := [2]float64{attr.Pos[0] - robotPos[0], attr.Pos[1] - robotPos[1]}
+
+		// calculate the distance between the robot and the attractor/repeller
+		distance := math.Sqrt(direction[0]*direction[0] + direction[1]*direction[1])
+
+		// scale the direction vector by the strength of the attractor/repeller and the distance
+		// to get the force exerted by this attractor/repeller
+		scaledDirection := [2]float64{direction[0] * attr.Strength / distance, direction[1] * attr.Strength / distance}
+
+		// add the force exerted by this attractor/repeller to the net force
+		if attr.Attractor {
+			netForce[0] += scaledDirection[0]
+			netForce[1] += scaledDirection[1]
+		} else {
+			netForce[0] -= scaledDirection[0]
+			netForce[1] -= scaledDirection[1]
+		}
+		fmt.Print("\n   scaledDirection   ")
+		fmt.Print(scaledDirection)
+		fmt.Print("   force   ")
+		fmt.Println(netForce)
+	}
+
+	return netForce
+}
+
+// DesiredDirection calculates the desired direction of the robot based on the net force
+func DesiredDirection(netForce [2]float64) float64 {
+	// convert the net force vector into an angle in radians
+	angle := math.Atan2(netForce[1], netForce[0])
+
+	// convert the angle from radians to degrees and return it
+	return angle * 180 / math.Pi
+}
+func skMove2(args_ [7]int, quit chan int) {
+	fmt.Println("skMove")
+	
+	arg := args_
+	vare := arg[0]
+	aux:=0.0
+	var robot coms.Robot_st
+	var ball coms.Ball_st
+	for {
+		select {
+		case <-quit:
+			fmt.Println("quit")
+			return
+		default:
+			for len(Fns_args) > 0 && vare != -1 {
+				arg = <-Fns_args
+			}
+
+			
+			
+			coms.GetRobot(0, &robot)
+			coms.GetBallPosition(&ball)
+			attractors := []AttractorRepeller{
+				{[2]float64{500, 0}, 10, true},
+				{[2]float64{ball.Coords.X, ball.Coords.Y}, 5, false},
+			}
+
+			// set the initial position of the robot
+			robotPos := [2]float64{robot.Coords.X, robot.Coords.Y}
+			aux=aux+5
+			// calculate the net force acting on the robot
+			netForce := NetForce(robotPos, attractors)
+
+			// calculate the desired direction of the robot
+			desiredDirection := DesiredDirection(netForce)
+			
+			fmt.Print("   Pos   ")
+			fmt.Print(robotPos)
+			fmt.Print("   ball   ")
+			fmt.Print(ball.Coords)
+			/*fmt.Print("   Force   ")
+			fmt.Print(int(netForce[0]))
+			fmt.Print(" ,  ")
+			fmt.Print(int(netForce[1]))*/
+			fmt.Print("   dir   ")
+			fmt.Print(int(desiredDirection))
+			fmt.Println()
+ 			time.Sleep(1*time.Second)
+ 
+		}
+	}
+}
+
+func skKick(args_ [7]int, quit chan int) {
+	select {
+	case <-quit:
+		fmt.Println("quit")
+		return
+	default:
+		fmt.Println("Kick")
+	}
+}
+func skRemoteControl(args_ [7]int, quit chan int) { //args_ [7]int
+	//rot, ori_aux, dir_aux := 0, 0, 0
+	fmt.Println("RemoteControl")
+	rot := 0
+	data_st := new(coms.MsiToEsp)
+	var dx, dy int //ori
+	//var flg bool
+	for { //flg= <- fns_chan[7]       args_ := range Fns_args
+
+		select {
+		case <-quit:
+			fmt.Println("quit")
+			return
+		default:
+			for len(Fns_args) > 0 && args_[0] != -1 {
+				args_ = <-Fns_args
+			}
+			//fmt.Println(len(fns_chan[7]))
+			if len(fns_chan[7]) > 0 {
+				fmt.Println("sdjkcbsc", <-fns_chan[7])
+			}
+			/*if <-fns_chan[7] {
+				return
+			}*/
+			//fmt.Println(args_)
+			dx = args_[1]
+			dy = args_[0]
+			rot = args_[2]
+			kick := args_[3]
+			dir_atual := coms.Get_bussola()
+			var vel, dir float64
+
+			ang := math.Atan2(float64(dy), float64(dx))
+			//fmt.Println("ang", ang, "   dx", dx, "dy   ", dy)
+
+			//vel = float64(dy) / math.Sin(ang)
+			dx2 := float64((dx * dx))
+			dy2 := float64((dy * dy))
+			vel = math.Sqrt(dx2 + dy2)
+			///fmt.Println(dx, '\t', dy, '\t', vel)
+			dir = ((ang * 180) / math.Pi) - float64(dir_atual)
+
+			if dir < 0 {
+				//fmt.Println("dirasasa", 360+dir)
+				dir = dir + 360
+			}
+			kick = kick * 7
+
+			/*fmt.Print("vel: ")
+			fmt.Print(vel)
+			fmt.Print("   dir: ")
+			fmt.Print(dir)
+			fmt.Print("   rot: ")
+			fmt.Print(rot)
+			fmt.Print("   Kick: ")
+			fmt.Println(kick)
+			*/
+			data_st.Velocity = int(vel)
+			data_st.Angular = int(rot)
+			data_st.Direction = int(dir)
+			data_st.KickTime = int(kick)
+			//coms.SendCommandToESP(coms.CMD_all, data_st.Velocity, data_st.Angular, data_st.Direction, 0, 0, 0)
+		}
+	}
+}
+
+func sk_orientation() {
+	fmt.Println("Orientation")
+
+	//webcam, _ := gocv.VideoCaptureFile("testbola.mp4")
+	kinect := initKinectCamera()
+
+	var ball_pos2 position
+	//ori_pid_kinect := NewPid(0.045, 0.035, 0.015, 0.05, 80)
+	ori_pid_kinect := NewPid(0.035, 0.035, 0.008, 0.05, 80)
+	ori_pid_omni := NewPid(1.0, 0.0, 0.0, 0.05, 80)
+
+	old_time := time.Now()
+	//var rot float64
+	for {
+		rot := 0.0
+		data, _ := kinect.RawRGBFrame(0)
+
+		img_bytes := C.GoBytes(unsafe.Pointer(data), C.int(640*480*3))
+		rgb_frame, _ := gocv.NewMatFromBytes(480, 640, gocv.MatTypeCV8UC3, img_bytes)
+		gocv.CvtColor(rgb_frame, &rgb_frame, gocv.ColorBGRToRGB)
+
+		window3.IMShow(rgb_frame)
+		window3.WaitKey(5)
+
+		ball_pos2.detectBall_2(rgb_frame)
+
+		if ball_pos2.X != -1 {
+			//distance := uint16(C.get_byte_16_2(depth_array, C.int(ball_pos2.Y*640+ball_pos2.X)))
+
+			erro := float64(ball_pos2.X - 292)
+			current_time := time.Now()
+			//fmt.Println("\ntime lap  ", float64(current_time.Sub(old_time).Seconds()))
+
+			rot = ori_pid_kinect.Update(erro, float64(current_time.Sub(old_time).Seconds()))
+			old_time = current_time
+			//fmt.Printf("  erro:  ")
+			//fmt.Print(math.Atan2(float64(distance), float64(ball_pos2.X)))
+
+			fmt.Printf("  rot:  ")
+			fmt.Println(rot)
+
+			coms.SendCommandToESP(coms.CMD_all, 0, -rot, 0, 0, 0, 0)
+
+		} else {
+			//calculate angular spped with omni vision coordinates
+			var ball_pos coms.Ball_st
+			coms.GetBallPosition(&ball_pos)
+			ball_pos2.X = ball_pos.Coords.X
+			ball_pos2.Y = ball_pos.Coords.Y
+
+			erro := math.Atan2(float64(ball_pos2.X), float64(ball_pos2.X))
+			//fmt.Print("  erro:  ")
+			//fmt.Print(erro)
+			current_time := time.Now()
+			//fmt.Println("\ntime lap  ", float64(current_time.Sub(old_time).Seconds()))
+
+			rot = ori_pid_omni.Update(erro, float64(current_time.Sub(old_time).Seconds()))
+			old_time = current_time
+
+			fmt.Print("  rot:  ")
+			fmt.Println(rot)
+		}
+	}
+}
+
+func (pid *Pid) sk_orientation2(time_ float64, ball_pos2 position) int {
+	fmt.Println("Orientation2")
+	//ori_pid_kinect := NewPid(0.045, 0.035, 0.015, 0.05, 80)
+
+	if ball_pos2.X != -1 {
+
+		erro := float64(ball_pos2.X - 292)
+		rot := pid.Update(erro, time_)
+		//fmt.Printf(" \nerro:  %f X:  %d  time  %f\n", rot, ball_pos2.X, time_)
+
+		return int(rot)
+	}
+	return 0
+}
+
+func skAtack(args_ [7]int, quit chan int) {
+	fmt.Println("skAtack")
+	Katracao := 2.0
+	Kintensidade := 3.8
+
+	kinect := initKinectCamera()
+	fmt.Println("initKinectCamera!")
+	var ball_pos2 position
+
+	var rot int
+	//input: deslocamento dos pixeis em x
+	ori_pid_kinect := NewPid(0.03, 0.035, 0.008, 0.05, 80)
+
+	//input: deslocamento angular do robot a bola
+	//ori_pid_omnivs := NewPid(0.03, 0.035, 0.008, 0.05, 80)
+	old_time := time.Now()
+	for {
+		select {
+		case <-quit:
+			fmt.Println("quit")
+			return
+		default:
+			fmt.Println("skReceive")
+			for len(Fns_args) > 0 && args_[0] != -1 {
+				args_ = <-Fns_args
+			}
+
+			fmt.Println("Image is empty!")
+			data, _ := kinect.RawRGBFrame(0)
+			depth_array, _ := kinect.RawDepthFrame(4)
+
+			img_bytes := C.GoBytes(unsafe.Pointer(data), C.int(640*480*3))
+			rgb_frame, _ := gocv.NewMatFromBytes(480, 640, gocv.MatTypeCV8UC3, img_bytes)
+			gocv.CvtColor(rgb_frame, &rgb_frame, gocv.ColorBGRToRGB)
+			//window3.IMShow(rgb_frame)
+			//window3.WaitKey(5)
+
+			if rgb_frame.Empty() {
+				fmt.Println("Image is empty!")
+			}
+			ball_pos2.detectBall_2(rgb_frame)
+			if ball_pos2.X != -1 && ball_pos2.Y != -1 {
+				//process the image from kinect
+				//atctivate the ball flag possession
+				fmt.Print("ball_pos2   ")
+				fmt.Println(ball_pos2)
+
+				//erro is the distance to the ball
+				erro := float64(uint16(C.get_byte_16_2(depth_array, C.int(ball_pos2.Y*640+ball_pos2.X))))
+				//angleToTarget := math.Atan2(float64(ball_pos2.Y), float64(ball_pos2.X))
+
+				//convertion from milimeters to meters
+				erro = erro / 1000
+				vel := Katracao * math.Exp(erro*Kintensidade)
+
+				current_time := time.Now()
+				fmt.Println("\ntime lap  ", float64(current_time.Sub(old_time).Milliseconds()))
+
+				rot = ori_pid_kinect.sk_orientation2(float64(current_time.Sub(old_time).Seconds()), ball_pos2)
+				old_time = current_time
+				if vel > 100 {
+					vel = 100
+				}
+				//fmt.Println("distanceToTarget  ", erro, "angleToTarget  ", angleToTarget*180/math.Pi)
+				fmt.Printf("distanceToTarget  %f  velocity  %f rotational  %d  \n", erro, vel, rot)
+				coms.SendCommandToESP(coms.CMD_all, vel, -rot, 0, 0, 0, 0)
+			} else {
+				/*old_time = time.Now()
+				//process the coordinates from omni vision tracking
+
+				//			var i_robot coms.Robot_st
+				//			var ball coms.Ball_st
+
+				var my_pos position
+				var ball_pos position
+
+				//coms.GetRobot(my_robot_number, &i_robot)
+				fmt.Scanf("%d", &my_pos.X)
+				fmt.Scanf("%d", &my_pos.Y)
+				fmt.Scanf("%d", &ball_pos.X)
+				fmt.Scanf("%d", &ball_pos.Y)
+
+				/*			my_pos.X = i_robot.Coords.X
+							my_pos.Y = i_robot.Coords.Y
+
+							//coms.GetBallPosition(&ball)
+							ball_pos.X = ball.Coords.X
+							ball_pos.Y = ball.Coords.Y
+				*/
+				/*//calculo do deslocamento angular em relacao a bola
+				ang := math.Atan2((float64(ball_pos.Y) - float64(my_pos.Y)), (float64(ball_pos.X) - float64(my_pos.X)))
+
+				//calculo do deslocamento ate a bola
+				//erro := float64((ball_pos.X - my_pos.X) / int(math.Sin(ang)))
+				a2 := (ball_pos.X - my_pos.X) * (ball_pos.X - my_pos.X)
+				b2 := +(ball_pos.Y - my_pos.Y) * (ball_pos.Y - my_pos.Y)
+				erro := math.Sqrt(float64(a2 + b2))
+
+				//contolo da velocidade angular
+				vel := Katracao * math.Exp(erro*Kintensidade)
+				current_time := time.Now()
+				//	fmt.Println("\ntime lap  ", float64(current_time.Sub(old_time).Milliseconds()))
+				ori_pid_omnivs.Update(ang, float64(current_time.Sub(old_time).Seconds()))
+				old_time = current_time
+				fmt.Printf("distanceToTarget  %f  disp  %f   velocity %fn", ang*180/math.Pi, erro, vel)
+				*/
+				coms.SendCommandToESP(coms.CMD_all, 0, 0, 0, 0, 0, 0)
+			}
+		}
+	}
+}
+
+func skAtack2() {
+	//kLinear := 1.0
+	//kRotational := 1.0
+	fmt.Println("sk_atack2")
+	kinect := initKinectCamera()
+
+	//old_time := time.Now()
+	fmt.Println("antes do for")
+	current_time := time.Now()
+	for {
+
+		data, _ := kinect.RawRGBFrame(0)
+
+		img_bytes := C.GoBytes(unsafe.Pointer(data), C.int(640*480*3))
+		rgb_frame, _ := gocv.NewMatFromBytes(480, 640, gocv.MatTypeCV8UC3, img_bytes)
+		gocv.CvtColor(rgb_frame, &rgb_frame, gocv.ColorBGRToRGB)
+		window3.IMShow(rgb_frame)
+		window3.WaitKey(1)
+
+		fmt.Println("\ntime lap  ", float64(current_time.Sub(time.Now()).Milliseconds()), '\n')
+		current_time = time.Now()
+
+	}
+}
+
+func skReceive(args_ [7]int, quit chan int) {
+	fmt.Println("skReceive")
+
+	kinect := initKinectCamera()
+	var ball_pos1, ball_pos2 position
+	var dist2 uint16
+
+	//db_pid := NewPid(1, 0, 0, 0.05, 100)
+	//mov_pid := NewPid(1, 0, 0, 0.05, 100)
+
+	//red := color.RGBA{255, 0, 0, 0}
+	old_time := time.Now()
+	dir := 0
+	dir++
+	dir--
+
+	for {
+		select {
+		case <-quit:
+			fmt.Println("quit")
+			return
+		default:
+
+			data, _ := kinect.RawRGBFrame(0)
+
+			img_bytes := C.GoBytes(unsafe.Pointer(data), C.int(640*480*3))
+			rgb_frame, _ := gocv.NewMatFromBytes(480, 640, gocv.MatTypeCV8UC3, img_bytes)
+			gocv.CvtColor(rgb_frame, &rgb_frame, gocv.ColorBGRToRGB)
+			//depht_frame,_ := freenect_device.RawDepthFrame(4)
+			//fmt.Println("     LOOP")
+			//fmt.Println("Image  !")
+			//rgb_frame, _ = gocv.ImageToMatRGBA(frame)
+			if rgb_frame.Empty() {
+				fmt.Println("Image is empty!")
+			}
+			depth_array, _ := kinect.RawDepthFrame(4)
+
+			//save last calculated values
+			ball_pos1 = ball_pos2
+			dist1 := dist2
+			dist2 = uint16(C.get_byte_16_2(depth_array, C.int(ball_pos2.Y*640+ball_pos2.X)))
+
+			//get ball coordinates from kinect frame
+			ball_pos2.detectBall_2(rgb_frame)
+			//ball_pos2.X, ball_pos2.Y = detect_ball(img)
+			//fmt.Println("\ntime lap  ", dist2)
+			/*gocv.Line(&imgz, image.Pt(ball_pos2.X, 480), image.Pt(ball_pos2.X, 0), red, 1)
+			gocv.Line(&imgz, image.Pt(0, ball_pos2.Y), image.Pt(640, ball_pos2.Y), red, 1)
+
+			*/
+
+			current_time := time.Now()
+			fmt.Println("\ntime lap  ", current_time.Sub(old_time))
+			old_time = current_time
+			if ball_pos1.X != -1 && ball_pos1.Y != -1 && ball_pos2.X != -1 && ball_pos2.Y != -1 && dist2 < (dist1-100) && dist1 != 0 && dist2 != 0 {
+				fmt.Println("     Entrou!!!!!")
+
+				//Calculate the trajectory
+				ball_side, side, orientation := obtain_lateral(float64(ball_pos1.X), float64(ball_pos2.X), float64(dist1), float64(dist2))
+				/*fmt.Printf("\nLateral distance: ")
+				fmt.Println(ball_side)*/
+
+				if side == 1 {
+
+					fmt.Printf("The ball is moving to the right\n")
+					vel := ball_side * 0.05
+					rot := -orientation * 0.5
+					fmt.Println("ball_side   ", ball_side, "rot", rot, "  vel  ", vel)
+
+					coms.SendCommandToESP(coms.CMD_all, vel, 0, 270, 0, 0, 0)
+					dir = 270
+				} else {
+					fmt.Printf("The ball is moving to the left\n")
+					vel := ball_side * 0.05
+					rot := -orientation * 0.5
+					fmt.Println("ball_side   ", ball_side, "   rot  ", rot, "  vel  ", vel)
+					coms.SendCommandToESP(coms.CMD_all, vel, 0, 90, 0, 0, 0)
+					dir = 90
+				}
+				//mov_pid.Update(ball_side)
+				//coms.SendCommandToESP(coms.CMD_all, vel, 0, dir, 0, 0, 0)
+
+			} else if dist2 < 10 {
+				fmt.Println(dist2)
+				//coms.SendCommandToESP(coms.CMD_all, 0, 0, 0, 0, 0, 0)
+
+			}
+
+		}
+	}
+}
+func initKinectCamera() *freenect.FreenectDevice {
+	freenect_device := freenect.NewFreenectDevice(0)
+
+	//img := gocv.NewMat()
+	if freenect_device.GetNumDevices() != 1 {
+		for freenect_device.GetNumDevices() != 1 {
+			freenect_device = freenect.NewFreenectDevice(0)
+			fmt.Println("Kinect device not found")
+			time.Sleep(100 * time.Millisecond)
+		}
+	}
+
+	freenect_device.Stop()
+	freenect_device.Shutdown()
+
+	return freenect_device
+}
+
+func obtain_lateral(ball_1x float64, ball_2x float64, dist1 float64, dist2 float64) (ball_side float64, side int, ori float64) {
+	var horizontal_dist1 = 0.0
+	var horizontal_dist2 = 0.0
+
+	//obtain the horizontal distance of the balls to the center of the image (pixels)
+	dist_middle_1 := -((img_width / 2) - ball_1x)
+	dist_middle_2 := -((img_width / 2) - ball_2x)
+
+	//obtain the angle between the balls and the center
+	horizontal_degrees_1 := dist_middle_1 * horizontal_cam / img_width
+	horizontal_degrees_2 := dist_middle_2 * horizontal_cam / img_width
+
+	//obtain the horizontal distance between the ballls and the robot
+	horizontal_dist1 = dist1 * math.Tan(horizontal_degrees_1*(math.Pi/180))
+	horizontal_dist2 = dist2 * math.Tan(horizontal_degrees_2*(math.Pi/180))
+
+	/*fmt.Printf("Horizontal distance 1: ")
+	fmt.Println(horizontal_dist1)
+	fmt.Printf("Horizontal distance 2: ")
+	fmt.Println(horizontal_dist2)
+	*/
+	//obtain the slope and the origin
+	m := (dist2 - dist1) / (horizontal_dist2 - horizontal_dist1)
+	b := dist1 - (m * horizontal_dist1)
+
+	//make a limit for the values
+	if m > 50 {
+		m = 50
+	} else if m < -50 {
+		m = -50
+	}
+	if b > 100000 {
+		b = 100000
+	} else if b < -100000 {
+		b = -100000
+	}
+
+	fmt.Printf("Declive: ")
+	fmt.Println(m)
+	fmt.Printf("Origem: ")
+	fmt.Println(b)
+
+	//Obtain the predicted location of the ball
+	ball_side = -(b / m)
+	side = 1
+	ori = m
+	/*fmt.Printf("Ball side: ")
+	fmt.Println(ball_side)
+	*/
+	//if it is negative means is in the left side
+	if ball_side < 0 {
+		ball_side = -ball_side
+		side = 0
+	}
+
+	//drawPlan(int(horizontal_dist1), int(horizontal_dist2), int(dist1), int(dist2), m)
+	return
+}
+
+// function to detect the ball and return the position
+func detect_ball(img gocv.Mat) (int, int) {
+	// Convert BGR to HSV image (dont modify the original)
+	hsv_img := gocv.NewMat()
+	gocv.CvtColor(img, &hsv_img, gocv.ColorBGRToHSV)
+	img_Channels, img_rows, img_cols := hsv_img.Channels(), hsv_img.Rows(), hsv_img.Cols()
+	// define HSV color upper and lower bound ranges
+	lower := gocv.NewMatWithSizeFromScalar(gocv.NewScalar(m_hue, m_sat, m_value, 0.0), img_rows, img_cols, gocv.MatTypeCV8UC3)
+	upper := gocv.NewMatWithSizeFromScalar(gocv.NewScalar(M_hue, M_sat, M_value, 0.0), img_rows, img_cols, gocv.MatTypeCV8UC3)
+	// split HSV lower bounds into H, S, V channels
+	lowerChans := gocv.Split(lower)
+	lowerMask := gocv.NewMatWithSize(img_rows, img_cols, gocv.MatTypeCV8UC3)
+	lowerMaskChans := gocv.Split(lowerMask)
+	// split HSV lower bounds into H, S, V channels
+	upperChans := gocv.Split(upper)
+	upperMask := gocv.NewMatWithSize(img_rows, img_cols, gocv.MatTypeCV8UC3)
+	upperMaskChans := gocv.Split(upperMask)
+	// copy HSV values to upper and lower masks
+	for c := 0; c < img_Channels; c++ {
+		for i := 0; i < img_rows; i++ {
+			for j := 0; j < img_cols; j++ {
+				lowerMaskChans[c].SetUCharAt(i, j, lowerChans[c].GetUCharAt(0, 0))
+				upperMaskChans[c].SetUCharAt(i, j, upperChans[c].GetUCharAt(0, 0))
+			}
+		}
+	}
+	gocv.Merge(lowerMaskChans, &lowerMask)
+	gocv.Merge(upperMaskChans, &upperMask)
+	// global mask
+	mask := gocv.NewMat()
+	gocv.InRange(hsv_img, lowerMask, upperMask, &mask)
+	// cut out what is not orange
+	img_Mask := gocv.NewMat()
+	gocv.Merge([]gocv.Mat{mask, mask, mask}, &img_Mask)
+	// cut out the not orange and convert back to BGR
+	gocv.BitwiseAnd(hsv_img, img_Mask, &hsv_img)
+	gocv.CvtColor(hsv_img, &hsv_img, gocv.ColorHSVToBGR)
+	//window := gocv.NewWindow("Orange Detection")
+	//window.IMShow(hsv_img)
+	//window.WaitKey(2)
+	contours := gocv.FindContours(mask, gocv.RetrievalExternal, gocv.ChainApproxSimple)
+	cx := -1
+	cy := -1
+	for i := 0; i < contours.Size(); i++ {
+		area := gocv.ContourArea(contours.At(i))
+		if area > MinimumArea {
+			M := gocv.MinAreaRect(contours.At(i)).Center
+			cx = M.X
+			cy = M.Y
+			return cx, cy
+		}
+	}
+	return cx, cy
+}
+
+// function to detect the ball and return the position
+func (pos *position) detectBall_2(img gocv.Mat) {
+	hsv := gocv.NewMat()
+	//window2 := gocv.NewWindow("filtered")
+
+	cx := -1
+	cy := -1
+	//webcam, _ := gocv.VideoCaptureFile("testbola.mp4")
+	gocv.CvtColor(img, &img, gocv.ColorBGRAToBGR)
+
+	if img.Empty() {
+		//fmt.Printf("Failed to read image: %s\n", imgPath)
+		os.Exit(1)
+	}
+
+	gocv.CvtColor(img, &hsv, gocv.ColorBGRToHSV)
+	img_rows, img_cols := hsv.Rows(), hsv.Cols() //hue    sat   val
+	lower := gocv.NewMatWithSizeFromScalar(gocv.NewScalar(m_hue, m_sat, m_value, 0.0), img_rows, img_cols, gocv.MatTypeCV8UC3)
+	upper := gocv.NewMatWithSizeFromScalar(gocv.NewScalar(M_hue, M_sat, M_value, 0.0), img_rows, img_cols, gocv.MatTypeCV8UC3)
+
+	mask := gocv.NewMat()
+	gocv.InRange(hsv, lower, upper, &mask)
+
+	ballMask := gocv.NewMat()
+	gocv.Merge([]gocv.Mat{mask, mask, mask}, &ballMask)
+
+	gocv.BitwiseAnd(img, ballMask, &img)
+
+	gocv.CvtColor(img, &img, gocv.ColorHSVToRGB)
+
+	gocv.CvtColor(img, &img, gocv.ColorBGRToGray)
+
+	kernel := gocv.GetStructuringElement(gocv.MorphRect, image.Pt(5, 5))
+	gocv.Erode(img, &img, kernel)
+	kernel.Close()
+
+	kernel = gocv.GetStructuringElement(gocv.MorphRect, image.Pt(25, 25))
+	gocv.Dilate(img, &img, kernel)
+	kernel.Close()
+
+	cnts := gocv.FindContours(img.Clone(), gocv.RetrievalExternal, gocv.ChainApproxSimple)
+	//fmt.Printf("GET IN thre lw\n")
+	//if cnts.Size() > 0 {
+	ball_flag = false
+	for c := 0; c < cnts.Size(); c++ {
+		if gocv.ContourArea(cnts.At(c)) > 1000 {
+			//fmt.Println("BOLA--------------------------|!!!!!")
+			//cnt := cnts.At(c)
+			M := gocv.Moments(img, false)
+
+			cx = int(M["m10"] / M["m00"])
+			cy = int(M["m01"] / M["m00"])
+			ball_flag = true
+
+		}
+	}
+	gocv.CvtColor(img, &img, gocv.ColorGrayToBGR)
+
+	pos.X = float64(cx)
+	pos.Y = float64(cy)
+}
+
+// function to detect the ball and return the position
+func (pos *position) detectBall2(imgz gocv.Mat) {
+	hsv := gocv.NewMat()
+	//window2 := gocv.NewWindow("filtered")
+	img := gocv.NewMat()
+	cx := -1
+	cy := -1
+	//webcam, _ := gocv.VideoCaptureFile("testbola.mp4")
+	gocv.CvtColor(imgz, &img, gocv.ColorBGRAToBGR)
+
+	if img.Empty() {
+		//fmt.Printf("Failed to read image: %s\n", imgPath)
+		os.Exit(1)
+	}
+
+	gocv.CvtColor(img, &hsv, gocv.ColorBGRToHSV)
+	img_rows, img_cols := hsv.Rows(), hsv.Cols() //hue    sat   val
+	lower := gocv.NewMatWithSizeFromScalar(gocv.NewScalar(m_hue, m_sat, m_value, 0.0), img_rows, img_cols, gocv.MatTypeCV8UC3)
+	upper := gocv.NewMatWithSizeFromScalar(gocv.NewScalar(M_hue, M_sat, M_value, 0.0), img_rows, img_cols, gocv.MatTypeCV8UC3)
+
+	mask := gocv.NewMat()
+	gocv.InRange(hsv, lower, upper, &mask)
+
+	ballMask := gocv.NewMat()
+	gocv.Merge([]gocv.Mat{mask, mask, mask}, &ballMask)
+
+	gocv.BitwiseAnd(img, ballMask, &img)
+
+	gocv.CvtColor(img, &img, gocv.ColorHSVToRGB)
+
+	gocv.CvtColor(img, &img, gocv.ColorBGRToGray)
+
+	kernel := gocv.GetStructuringElement(gocv.MorphRect, image.Pt(5, 5))
+	gocv.Erode(img, &img, kernel)
+	kernel.Close()
+
+	kernel = gocv.GetStructuringElement(gocv.MorphRect, image.Pt(25, 25))
+	gocv.Dilate(img, &img, kernel)
+	kernel.Close()
+
+	cnts := gocv.FindContours(img.Clone(), gocv.RetrievalExternal, gocv.ChainApproxSimple)
+	//fmt.Printf("GET IN thre lw\n")
+	//if cnts.Size() > 0 {
+	ball_flag = false
+	for c := 0; c < cnts.Size(); c++ {
+		if gocv.ContourArea(cnts.At(c)) > 1000 {
+			//fmt.Println("BOLA--------------------------|!!!!!")
+			//cnt := cnts.At(c)
+			M := gocv.Moments(img, false)
+
+			cx = int(M["m10"] / M["m00"])
+			cy = int(M["m01"] / M["m00"])
+			ball_flag = true
+
+		}
+	}
+	gocv.CvtColor(img, &img, gocv.ColorGrayToBGR)
+
+	pos.X = float64(cx)
+	pos.Y = float64(cy)
+}
+
+func calculateDribblers(pos position) {
+	cx := pos.X
+	cy := pos.Y
+	kp := 17.0
+	//ki := 0.2
+	erro := 411 - cy
+	driblers_vel := (erro * kp) //+ float64(erro)*ki)
+	balance := (cx * 100) / 580
+
+	fmt.Print("    balance    ")
+	fmt.Printf("%f\n", balance)
+
+	db_v1 := float64((driblers_vel * (100 - balance)) / 50)
+	db_v2 := float64((driblers_vel * balance) / 50)
+	if db_v1 > 300 {
+		db_v1 = 300
+	}
+	if db_v2 > 300 {
+		db_v2 = 300
+	}
+	fmt.Printf("db_v1  %f    db_v2  %f \n ", db_v1, db_v2)
+	//coms.SendCommandToESP(coms.CMD_omni_speed, 0, 0, 0)
+	coms.SendCommandToESP(coms.CMD_all, 0, 0, 0, db_v2, db_v1, 0)
+
+}
+

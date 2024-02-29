@@ -1,0 +1,10 @@
+Instalattion of Thonny
+
+$ pip3 install thonny
+$ bash <(curl -s https://thonny.org/installer-for-linux)
+$ sudo apt install python3-tk thonny
+
+To Run Thonny
+
+$ cd /home/*user*/apps/thonny/bin/
+$ ./thonny
