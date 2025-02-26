@@ -10,7 +10,8 @@
  
 
 ## Our robot: 
-![Robot](https://github.com/MSL-LAR-MinhoTeam/2TDP/blob/main/Images/git_msl_Our_Robot.jpg)
+![Robot](https://github.com/LARobotics/LAR-MSL/blob/20663239fc15581b660c2f97cc02357530d0f0d7/Images/git_msl_Our_Robot.jpg)
+
 # Base Station and Strategy:
 The Base Station and Strategy was developed in Python 3.11 and is one of the most important tools for the robots to be able to play. It handles the communications between the Base Station and the robots and even from the RefBox using WebSockets. The Strategy works with the inputs from the robots, calculates the group of skills for that game state, and gives that information back to the robots.
 
